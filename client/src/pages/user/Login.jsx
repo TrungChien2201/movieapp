@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import api from "../api";
+import React, { useEffect, useState } from "react";
+import api from "../../api";
 import { Button , Form} from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
 const Login = () => {
@@ -16,10 +16,17 @@ const Login = () => {
         await api.login(data).then(res => {
            if(res.data.status === 'Success'){
                localStorage.setItem('Auth', res.data.accessToken);
+               history.push('/movies/list')
            }
             
         })
     }
+  const Auth = localStorage.getItem('Auth');
+  useEffect(() => {
+    if(Auth){
+      history.replace('/')
+    }
+  }, [Auth])
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group controlId="formBasicEmail">

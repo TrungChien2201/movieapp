@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react'
+import { Button } from 'react-bootstrap'
+import { Link, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
 const Collapse = styled.div.attrs({
@@ -14,8 +15,14 @@ const Item = styled.div.attrs({
     className: 'collpase navbar-collapse',
 })``
 
-class Links extends Component {
-    render() {
+function Links() {
+    const history = useHistory();
+    const handleLogout = () => {
+        history.push('/login');
+      localStorage.removeItem('Auth');
+
+    }
+    
         return (
             <React.Fragment>
                 <Link to="/" className="navbar-brand">
@@ -33,11 +40,13 @@ class Links extends Component {
                                 Create Movie
                             </Link>
                         </Item>
+                        <Item>
+                            <Button type="link" onClick={handleLogout}>Logout</Button>
+                        </Item>
                     </List>
                 </Collapse>
             </React.Fragment>
         )
-    }
 }
 
 export default Links
