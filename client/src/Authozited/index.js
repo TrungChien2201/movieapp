@@ -11,7 +11,7 @@ const Authorzited = ({component: Component, ...rest}) => {
             Auth ? (
               <Component {...props} />
             ) : (
-              <Redirect to="/login"/>
+              window.location.href = '/login'
             )
           }
         />

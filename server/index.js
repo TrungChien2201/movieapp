@@ -6,9 +6,14 @@ const db = require('./db')
 const movieRouter = require('./routes/movie-router')
 const loginRouter = require('./routes/login-router')
 const app = express()
-const apiPort = 3000
+const apiPort = 3001
 
-app.use(bodyParser.urlencoded({ extended: true }))
+const { createProxyMiddleware } = require('http-proxy-middleware');
+ 
+// proxy middleware options
+
+
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
 app.use(bodyParser.json())
 

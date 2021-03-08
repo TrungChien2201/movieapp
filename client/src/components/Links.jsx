@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
+import { Button } from 'antd'
 import { Link, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 
@@ -18,7 +18,7 @@ const Item = styled.div.attrs({
 function Links() {
     const history = useHistory();
     const handleLogout = () => {
-        history.push('/login');
+        window.location.href = '/login';
       localStorage.removeItem('Auth');
 
     }

@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
-import {Form,Button} from 'react-bootstrap';
-import apis from '../../api';
+import {Form , Button , Input} from 'antd';
+import apis from '../../../api';
 const ForgotPassword = () => {
     const [user,setUser] = useState({username: ''});
     const handleOnchange = (e:any) => {
         setUser({username: e.target.value})
     }
-    const handleSubmit = async(e) => {
-        e.preventDefault();
+    const handleSubmit = async(e:any) => {
+        
        await apis.forgotPassword(user).then(resp => {
            console.log(resp)
        })
     }
     return (
-        <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control onChange={handleOnchange} placeholder="Enter email" />
-        </Form.Group>
+        <Form onFinish={handleSubmit}>
+        <Form.Item label="Email address">
+         
+          <Input onChange={handleOnchange} placeholder="Enter email" />
+        </Form.Item>
         
-        <Button variant="primary" type="submit">
+        <Button type="primary" htmlType="submit">
           Forgot
         </Button>
       </Form>   
