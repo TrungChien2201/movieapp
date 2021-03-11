@@ -75,7 +75,7 @@ Register = (req, res) => {
 ForgotPassword = async(req,res) => {
 console.log(``, req.body.username);
 accountService.forgotPassword(req.body.username, req.get('origin'))
-  .then(() =>res.json({ message: 'Please check your email for password reset instructions' }))
+  .then(() =>res.json({status: 'Success', message: 'Please check your email for password reset instructions' }))
   .catch(err => console.log(`err`,err));
 }
 module.exports = { CreateLogin, Register,ForgotPassword };

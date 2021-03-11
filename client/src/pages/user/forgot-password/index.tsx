@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {Form , Button , Input} from 'antd';
 import apis from '../../../api';
+import UploadFile from '../../../components/uploadFile';
 const ForgotPassword = () => {
     const [user,setUser] = useState({username: ''});
     const handleOnchange = (e:any) => {
@@ -13,6 +14,7 @@ const ForgotPassword = () => {
        })
     }
     return (
+      <>
         <Form onFinish={handleSubmit}>
         <Form.Item label="Email address">
          
@@ -23,6 +25,8 @@ const ForgotPassword = () => {
           Forgot
         </Button>
       </Form>   
+      <UploadFile />
+      </>
     )
 }
 

@@ -12,6 +12,7 @@ export const getMovieById = id => api.get(`/movie/${id}`)
 export const login = payload => api.post(`/login`, payload)
 export const register  = payload => api.post(`/register`, payload)
 export const forgotPassword = payload => api.post(`/forgot`,payload)
+export const createProduct = payload => api.post(`/create-product`,payload)
 const apis = {
     insertMovie,
     getAllMovies,
@@ -20,7 +21,8 @@ const apis = {
     getMovieById,
     login,
     register,
-    forgotPassword
+    forgotPassword,
+    createProduct
 }
 
 export default apis
