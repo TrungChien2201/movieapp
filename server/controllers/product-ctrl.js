@@ -31,7 +31,7 @@ GetProduct = (req,res) => {
 }
 
 EditProduct = (req,res) => {
-  console.log(req)
+  console.log(req.body, 'resss')
   const id = req.params.id;
   
   Product.findOne({_id: id},(err,product)=> {
@@ -48,16 +48,16 @@ EditProduct = (req,res) => {
     product.image = req.body.image
     product.save()
     .then(()=> {
-      return res.status(200).json({status: 'SUCCESS',message: ''})
+      return res.status(200).json({status: 'SUCCESS',message: 'Edit success'})
     })
     .catch(err => {
       return res.status(400).json({status: 'ERROR',message: err})
-
     })
   })
 }
 
 DeleteProduct = (req,res) => {
+  console.log(req)
   const id = req.params.id;
   Product.findOne({_id: id}, (err,product)=> {
     console.log(`pr`, product);
@@ -73,9 +73,14 @@ DeleteProduct = (req,res) => {
     })
     .catch(err => {
       return res.status(201).json({status: 'ERROR',message: err})
-
     })
   })
 }
 
-module.exports = {CreateProduct,GetProduct,EditProduct,DeleteProduct}
+SearchProduct = (req,res) => {
+  console.log(`req`,req.params);
+  const articles = Product.find({title: req.params.search}).exec();
+  console.log('result', articles);
+}
+
+module.exports = {CreateProduct,GetProduct,EditProduct,DeleteProduct,SearchProduct}

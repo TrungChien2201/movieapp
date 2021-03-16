@@ -7,5 +7,6 @@ const router = express.Router()
 router.post('/create-product', Product.CreateProduct)
 router.get('/get-product',Product.GetProduct)
 router.put('/edit-product/:id', Product.EditProduct)
-router.post('/delete-product/:id', Product.DeleteProduct)
+router.delete('/delete-product/:id', Product.DeleteProduct)
+router.get('/search-product/:seach',Product.SearchProduct)
 module.exports = router
