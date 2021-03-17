@@ -25,7 +25,7 @@ const MenuAdmin = (props: any) => {
           mode="inline"
           theme="dark"
           inlineCollapsed={collapse}
-          style={{minHeight: '100vh'}}
+          style={{minHeight: '150vh',transition: 'all 0s'}}
         >
             <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16, marginTop: 16,marginLeft: 16 }}>
           {React.createElement(collapse ? MenuUnfoldOutlined : MenuFoldOutlined)}

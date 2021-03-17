@@ -33,7 +33,7 @@ CreateLogin = (req, res) => {
     while (login?.username === body.username && login?.password === body.password) {
       return res
         .status(200)
-        .json({ status: "Success", message: "Login success", accessToken: login?.accessToken });
+        .json({ status: "Success", message: "Login success", accessToken: login?.accessToken,userId: login._id });
     }
     return res.status(401).json({ status: "Error", message: "Login fail" });
   });

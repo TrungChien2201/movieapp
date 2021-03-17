@@ -14,6 +14,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import apis from "../../../api";
 import ModalAntd from "../../../components/Modal";
 import { SUCCESS } from "../../../constants";
+import './style.scss';
 
 const ManageProduct = () => {
   const [form] = Form.useForm();
@@ -21,6 +22,7 @@ const ManageProduct = () => {
   const [visible, setVisible] = useState(false);
   const [visibles, setVisibles] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [keySearch,setKeySearch] = useState('');
   const [product, setProduct]: any = useState([]);
   const [dataEdit, setDataEdit] = useState({});
   const handleSubmit = (e: any) => {
@@ -28,13 +30,20 @@ const ManageProduct = () => {
     apis.createProduct(e).then((resp: any) => {
       debugger;
       if (resp?.data.status === SUCCESS) {
-        setProduct([...product, e]);
+        if(e.price_sale){
+          setProduct([...product, {...e,percent_sale: Math.ceil((1 - (e.price_sale/e.price))*100)}]);
+        }
+       else setProduct([...product, {...e, percent_sale: null}]);
       }
     });
-    form.resetFields()
+    form.resetFields();
+    setUrl('');
   };
-  React.useEffect(() => {
+  const handleGetProduct  = () => {
     apis.getProduct().then((resp) => setProduct(resp.data.data));
+  }
+  React.useEffect(() => {
+    handleGetProduct();
   }, []);
   const columns = [
     {
@@ -54,6 +63,16 @@ const ManageProduct = () => {
     },
     {
       key: 5,
+      title: "Price Sale",
+      dataIndex: "price_sale",
+    },
+    {
+      key: 6,
+      title: "Percent Sale",
+      dataIndex: "percent_sale",
+    },
+    {
+      key: 7,
       title: "image",
       dataIndex: "image",
       render: (text: string, record: any, index: number) => (
@@ -61,7 +80,7 @@ const ManageProduct = () => {
       ),
     },
     {
-      key: 6,
+      key: 8,
       title: "",
       render: (text: string, record: any, index: number) => (
         <div>
@@ -106,13 +125,16 @@ const ManageProduct = () => {
 
   const handleEdit = (e: any) => {
       setVisible(false)
+      setEdit(false)
+      console.log(e)
        apis.updateProduct({id: e.id, data: e?.e}).then((resp: any)=> {
            if(resp?.data.status === SUCCESS){
                notification.success({message: 'Edit success'});
                const dataNew = product.map((el: any) => {
                  if(el?._id === e.id){
                      const elNew = e?.e;
-                   return {...elNew,_id: el._id} 
+                     
+                   return {...elNew,_id: el._id, percent_sale: e.percent_sale} 
                  }
                  return el;
                })
@@ -120,10 +142,21 @@ const ManageProduct = () => {
            }
        });
        form.resetFields()
+       setUrl('');
   };
  
   const handleSearchChange = (e: any) => {
-      apis.searchProduct(e.target.value)
+      setKeySearch(e.target.value)
+      if(e.target.value === ''){
+        handleGetProduct();
+      }
+  }
+
+  const handleSearch =() => {
+    apis.searchProduct(keySearch).then((resp: any) =>{
+      console.log(resp)
+      setProduct(resp.data.result)
+    })
   }
   return (
     <>
@@ -131,6 +164,9 @@ const ManageProduct = () => {
         <Form style={{ width: "40%", display: "flex" }}>
           <Form.Item style={{ width: "80%" }}>
             <Input onChange={handleSearchChange}/>
+          </Form.Item>
+          <Form.Item>
+            <Button style={{borderLeft: 'none'}} onClick={handleSearch}>Search</Button>
           </Form.Item>
         </Form>
         <Button type="primary" onClick={() => setVisible(true)}>
@@ -144,6 +180,8 @@ const ManageProduct = () => {
           visible={visible}
           setVisible={setVisible}
           form={form}
+          url={url}
+          setUrl={setUrl}
           handleSubmit={handleSubmit}
         />
       </div>

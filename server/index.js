@@ -6,6 +6,7 @@ const db = require('./db')
 const movieRouter = require('./routes/movie-router')
 const loginRouter = require('./routes/login-router')
 const productRouter = require('./routes/product-router')
+const storeRouter = require('./routes/store-router')
 const app = express()
 const apiPort = 3001
 
@@ -27,4 +28,5 @@ app.get('/', (req, res) => {
 app.use('/api', movieRouter)
 app.use('/api', loginRouter)
 app.use('/api', productRouter)
+app.use('/api', storeRouter)
 app.listen(apiPort, () => console.log(`Server running on port ${apiPort}`))

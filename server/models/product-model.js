@@ -5,7 +5,11 @@ const Product = new Schema({
     title: {type: String, required: true},
     description: {type: String, required: true},
     price: {type: Number, required: true},
+    price_sale: {type: Number, required: false},
+    percent_sale: {type: Number, required: false},
     image: {type: String, required: true},
+    color: {type: Array, required: true},
+    size: {type: Array, required: true}
 },
 { timestamps: true },
 )

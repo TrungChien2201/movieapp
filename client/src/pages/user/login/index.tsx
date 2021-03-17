@@ -21,7 +21,9 @@ const Login = () => {
       await api.register({username: e.username,password: e.password}).then((resp:any) => {
         debugger
         if (resp.data.status === 'Success') {
-          localStorage.setItem("Auth", resp.data.accessToken);
+          localStorage.setItem("auth", resp.data.accessToken);
+          localStorage.setItem("id", resp.data._id);
+
           history.push("/");
         }
       })
@@ -29,7 +31,10 @@ const Login = () => {
     else {
       await api.login(data).then((res) => {
       if (res.data.status === "Success") {
-        localStorage.setItem("Auth", res.data.accessToken);
+        console.log(res, 'res')
+        localStorage.setItem("auth", res.data.accessToken);
+        localStorage.setItem("id", res.data.userId);
+
         history.push("/");
       }
     })}
