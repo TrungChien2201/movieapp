@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const Login = new Schema({
     username: {type: String, required: true},
     password: {type: String , required: true},
+    rule: {type: Number, required: true},
     accessToken: {type: String, required: true},
     resetToken:  {token: {type: String}, expires: {type: String} ,required: false}
 },

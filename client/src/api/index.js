@@ -21,6 +21,19 @@ export const searchProduct = payload => api.get(`/search-product/${payload}`)
 export const getProductPage = page => api.get(`/product/${page}`)
 export const CreateStore = payload => api.post(`/create-store/${payload.id}`,payload.store)
 export const getStore = userId => api.get(`/get-store/${userId}`)
+export const deleteStore = id => api.delete(`/delete-store/${id}`);
+export const deleteProductStore = payload => api.post(`delete-product-store`, payload);
+export const getCity = () => axios.get('/api/city');
+export const getDistrict = city => axios.get(`/api/district/${city}`);
+export const getCommune = district => axios.get(`/api/commune/${district}`);
+export const CreateOrder = payload => axios.post(`/api/create-order`, payload);
+export const getOrder = id => axios.get(`/api/get-order/${id}`);
+
+// admin
+
+export const getAccount = () => axios.get(`/api/get-account`);
+export const deleteAccount = id => axios.delete(`/api/delete-account/${id}`);
+export const editAccount = payload => axios.put(`/api/edit-account`,payload);
 
 const apis = {
     insertMovie,
@@ -39,7 +52,20 @@ const apis = {
     searchProduct,
     getProductPage,
     CreateStore,
-    getStore
+    deleteStore,
+    getStore,
+    deleteProductStore,
+    getCity,
+    getDistrict,
+    getCommune,
+    CreateOrder,
+    getOrder,
+
+    // admin
+    getAccount,
+    deleteAccount,
+    editAccount
+    
 }
 
 export default apis

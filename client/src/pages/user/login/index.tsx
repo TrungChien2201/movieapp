@@ -3,6 +3,7 @@ import api from "../../../api";
 import { Button, Form, Input , Checkbox} from "antd";
 import { Link, useHistory } from "react-router-dom";
 import "./styles.scss";
+import { SUCCESS } from "../../../constants";
 
 const Login = () => {
   const [data, setData] = useState({
@@ -20,22 +21,25 @@ const Login = () => {
     if(!login){
       await api.register({username: e.username,password: e.password}).then((resp:any) => {
         debugger
-        if (resp.data.status === 'Success') {
+        if (resp.data.status === SUCCESS) {
           localStorage.setItem("auth", resp.data.accessToken);
           localStorage.setItem("id", resp.data._id);
-
+          localStorage.setItem("id", resp.data.rule);
           history.push("/");
         }
       })
     }
     else {
       await api.login(data).then((res) => {
-      if (res.data.status === "Success") {
+      if (res.data.status === SUCCESS) {
         console.log(res, 'res')
         localStorage.setItem("auth", res.data.accessToken);
         localStorage.setItem("id", res.data.userId);
-
-        history.push("/");
+        localStorage.setItem("rule", res.data.rule);
+        if(res.data.rule === 2){
+          history.push("/admin");
+        }
+       else history.push("/");
       }
     })}
     }

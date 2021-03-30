@@ -15,7 +15,7 @@ CreateStore = (req,res) => {
           })
        }
        else if(el){
-          el?.store.push(body);
+          el.store.push(body);
           el.save()
           .then(()=> {
               return res.status(200).json({status: 'SUCCESS', message: 'Add product join store'})
@@ -34,7 +34,7 @@ getStore  = async(req,res) => {
        if(err){
            return res.status(400).json({status: 'ERROR', message: err})
        }
-       if(store.length < 1){
+       if(!store || store.length < 1){
         return res.status(400).json({status: 'ERROR', message: 'Not found in store with user ID'})
        }
        else {
@@ -43,4 +43,46 @@ getStore  = async(req,res) => {
        
    })
 }
-module.exports = {CreateStore, getStore}
+deleteStore = (req,res) => {
+    const idStore = req.params.id
+  Store.findOne({_id: idStore}, (err, store)=> {
+      if(err){
+          return res.status(200).json({status: 'ERROR', message: err})
+      }
+      if(!store || store.length < 1){
+        return res.status(400).json({status: 'ERROR', message: 'Store not found'})
+
+      }
+      console.log(`store`, store);
+      store.delete()
+      .then(()=> {
+          return res.status(200).json({status: 'SUCCESS'})
+      })
+      
+  })
+}
+
+deleteProductStore = (req, res) => {
+  const body = req.body
+  Store.findOne({_id: body.userId}, (err,store) => {
+      if(err){
+          return res.status(400).json({status: 'ERROR', message: err});
+      }
+      if(!store || store.length < 1){
+          return res.status(400).json({status: 'ERROR', message: 'Store with id User not found'});
+      }
+      console.log(`store`, store);
+     const newStore = store.store.filter(el => el._id !== body.idProduct);
+     store.store = newStore;
+     store.save()
+       .then(()=> {
+           return res.status(200).json({status: 'SUCCESS', message: 'Delete product out store Success'});
+       })
+       .catch(err => {
+        return res.status(400).json({status: 'ERROR', message: err});
+
+       })
+      
+  })
+}
+module.exports = {CreateStore, getStore, deleteStore, deleteProductStore}

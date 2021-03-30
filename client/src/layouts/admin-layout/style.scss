@@ -1,18 +1,25 @@
 .layout-page{
     min-height: 100vh;
     .menu-admin{
-       
+       position: fixed;
+       left: 0;
+       top: 0;
+       bottom: 0;
+       z-index: 100;
     }
     .layout-header{
         position: fixed;
         top: 0;
-        width: 100%;
+        padding: 15px 0px;
+        width: calc(100% - 322px);
         height: 68px;
+        align-items: center;
+        z-index: 1000;
+    }
+    .layout-content{
+        padding-left: 320px;
     }
     .layout-collapse{
-        position: absolute;
-        left: 90px;
-        right: 0;
-        max-width: calc(100% - 91px);
+        padding-left: 120px;
     }
 }

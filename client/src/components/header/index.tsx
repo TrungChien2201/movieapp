@@ -41,10 +41,10 @@ const Header = () => {
         </Menu>
         <Menu mode="horizontal" className="icon">
           <Menu.Item key="point">
-            <Link to="/"><SearchOutlined /></Link>
+            <Link to="/"><i className="fas fa-search"></i></Link>
           </Menu.Item>
           <Menu.Item key="order">
-            <Link to="/"><AppstoreAddOutlined /></Link>
+            <Link to="/store"><i className="fas fa-cart-plus"></i></Link>
           </Menu.Item>
         </Menu>
 </div>

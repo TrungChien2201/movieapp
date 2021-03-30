@@ -1,9 +1,10 @@
 import  React , {useState} from 'react';
-import apis from '../../../api';
-import {Button} from 'antd';
+import apis, { deleteProduct } from '../../../api';
+import {Button, notification} from 'antd';
 import { Irespone } from '../../../constants/interface';
 import './style.scss';
 import { useHistory } from 'react-router';
+import { SUCCESS } from '../../../constants';
 const StoreProduct = () => {
   const userId = localStorage.getItem('id');
   const [store, setStore] = useState([]);
@@ -31,10 +32,25 @@ const handlePayment = () => {
        store
     })
 }
-console.log(count)
+const deleteProduct = (id: String) => {
+  apis.deleteProductStore({userId, idProduct: id}).then(({data}: {data: Irespone})=> {
+      if(data.status === SUCCESS){
+        const newStore = store.filter((item: any) => item._id !== id)
+        setStore(newStore);
+        notification.success({
+            message: 'Xóa sản phẩm thành công',
+          });
+      }
+  })
+}
     return (
         <div className="store-user">
-            {!store ? "Chưa có sản phẩm nào trong giỏ hàng": <>
+            <Button className="btn-follow" onClick={() => history.push('/order-form')}><i className="fas fa-plus-square pr-2"></i> Theo dõi đơn hàng</Button>
+            {store.length < 1 ? <div className="w-50">
+                <div>Chưa có sản phẩm nào trong giỏ hàng</div>
+                
+                <Button onClick={()=>history.push('/')} className="btn-payment mt-5 w-50">Quay lại trang chủ</Button>
+            </div>: <>
                 <table>
                     <thead>
                         <tr>
@@ -68,7 +84,8 @@ console.log(count)
                         <td>{item.size}</td>
                         <td>{item.total}</td>
                         <td>{item.price_sale * item.total}đ</td>
-                        <td><Button style={{border: 'none',color: '#c51212'}}><i className="far fa-trash-alt"></i></Button></td>
+                        <td>
+                            <Button onClick={()=>{deleteProduct(item._id)}} style={{border: 'none',color: '#c51212'}}><i className="far fa-trash-alt"></i></Button></td>
                          </tr>    
                          
                     ))

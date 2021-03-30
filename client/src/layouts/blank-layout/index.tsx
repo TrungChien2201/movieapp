@@ -10,28 +10,30 @@ import Footer from '../../components/footer';
 import ProductDetail from '../../pages/user/product-id';
 import StoreProduct from '../../pages/user/store';
 import Payment from '../../pages/user/store/component/payment';
+import OrderForm from '../../pages/user/follow-order';
+import OrderDetail from '../../pages/user/follow-order/follow-order-detail';
 
 const LayoutBlank  = () => {
     return (
         <Router>
             <Header />
+            <div style={{minHeight: 'calc(100vh - 400px)'}}>
             <Switch>
-                <div style={{minHeight: 'calc(100vh - 400px)'}}>
+               
                 <Authorzited path="/movies/list" component={MoviesList} />
                 <Authorzited path="/movies/create" component={MoviesInsert} />
-                <Route
-                    path="/movies/update/:id"
-                    exact
-                    component={MoviesUpdate}
-                />
+               
                 <Route path="/product/:id"  component={ProductDetail}/>
                 <Route path="/store"  component={StoreProduct} />
                 <Route path="/payment"  component={Payment} />
+                <Route path="/order-form"  component={OrderForm} />
+                <Route path="/follow-order-detail" exact  component={OrderDetail} />
                 <Route path="/register" exact component={Register} /> 
                 <Route path="/forgot" exact component={ForgotPassword} /> 
                 <Route path="/" exact component={HomePage} /> 
-                </div>
+                
             </Switch>
+            </div>
             <Footer />
         </Router>
     )

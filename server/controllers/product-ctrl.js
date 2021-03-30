@@ -74,7 +74,7 @@ EditProduct = (req,res) => {
     if(err){
       return res.status(400).json({status: 'ERROR',message: err})
     }
-    if(product?.length < 1){
+    if(product.length < 1){
       return res.status(201).json({status: 'ERROR', message: 'Not product id request',errorCode: 'ERROR.NOT.EXIST'})
     }
     product.description = req.body.description

@@ -1,7 +1,15 @@
+
 .store-user{
     padding: 50px 30px;
+    .btn-follow{
+        position: absolute;
+        right: 30px;
+        font-weight: 600;
+        height: 40px;
+    }
     table{
         width: 100%;
+        margin-top: 50px;
         thead tr th{
             padding: 20px 0px;
             text-align: center;

@@ -18,39 +18,41 @@ const MenuAdmin = (props: any) => {
     }
     return (
         <div style={{ width: '100%',height: '100%' }}>
-        
+          <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16, marginTop: 16,marginLeft: 23 }}>
+            {collapse ? (<MenuUnfoldOutlined />) : (<MenuFoldOutlined />)}
+        </Button>
         <Menu
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
+          defaultSelectedKeys={['dashboard']}
           mode="inline"
           theme="dark"
           inlineCollapsed={collapse}
           style={{minHeight: '150vh',transition: 'all 0s'}}
         >
-            <Button type="primary" onClick={toggleCollapsed} style={{ marginBottom: 16, marginTop: 16,marginLeft: 16 }}>
-          {React.createElement(collapse ? MenuUnfoldOutlined : MenuFoldOutlined)}
-        </Button>
-          <Menu.Item key="1" icon={<PieChartOutlined />}>
-            Option 1
+     
+          <Menu.Item key="product" icon={<PieChartOutlined />}>
+            Sản phẩm
           </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
-            Option 2
+          <Menu.Item key="order" icon={<DesktopOutlined />}>
+            Đơn hàng
           </Menu.Item>
-          <Menu.Item key="3" icon={<ContainerOutlined />}>
-            Option 3
+          <Menu.Item key="account" icon={<ContainerOutlined />}>
+            Tài khoản
+          </Menu.Item>
+          <Menu.Item key="dashboard" icon={<ContainerOutlined />}>
+            Thống kê
           </Menu.Item>
           <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
-            <Menu.Item key="5">Option 5</Menu.Item>
-            <Menu.Item key="6">Option 6</Menu.Item>
-            <Menu.Item key="7">Option 7</Menu.Item>
-            <Menu.Item key="8">Option 8</Menu.Item>
+            <Menu.Item key="sub2">Option 5</Menu.Item>
+            <Menu.Item key="sub3">Option 6</Menu.Item>
+            <Menu.Item key="sub4">Option 7</Menu.Item>
+            <Menu.Item key="sub5">Option 8</Menu.Item>
           </SubMenu>
-          <SubMenu key="sub2" icon={<AppstoreOutlined />} title="Navigation Two">
-            <Menu.Item key="9">Option 9</Menu.Item>
-            <Menu.Item key="10">Option 10</Menu.Item>
-            <SubMenu key="sub3" title="Submenu">
-              <Menu.Item key="11">Option 11</Menu.Item>
-              <Menu.Item key="12">Option 12</Menu.Item>
+          <SubMenu key="sub6" icon={<AppstoreOutlined />} title="Navigation Two">
+            <Menu.Item key="sub7">Option 9</Menu.Item>
+            <Menu.Item key="sub8">Option 10</Menu.Item>
+            <SubMenu key="sub9" title="Submenu">
+              <Menu.Item key="sub11">Option 11</Menu.Item>
+              <Menu.Item key="sub12">Option 12</Menu.Item>
             </SubMenu>
           </SubMenu>
         </Menu>
