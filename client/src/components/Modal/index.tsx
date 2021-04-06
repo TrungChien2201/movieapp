@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'antd'
-
+import './style.scss';
 interface Props{
     visible?: boolean;
     onSubmit?: (e: any) => void | any ;
@@ -12,7 +12,7 @@ interface Props{
 const ModalAntd = (props: Props) => {
     const {visible, children, onSubmit, onCancle} = props;
     return (
-        <Modal style={{width: '40%'}} visible={visible} footer={null} onCancel={onCancle}>
+        <Modal width = '40%' visible={visible} footer={null} onCancel={onCancle}>
            {children}
         </Modal>
     )

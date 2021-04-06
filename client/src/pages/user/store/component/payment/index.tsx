@@ -1,5 +1,5 @@
 import React , {useState} from 'react';
-import {Button , Form , Input, Select} from 'antd';
+import {Button , Form , Input, Select, Spin} from 'antd';
 import { useHistory } from 'react-router';
 import './style.scss';
 import apis from '../../../../../api';
@@ -9,7 +9,7 @@ import FormatMoney from '../../../../../components/format-money';
 
 const { Option } = Select;
 const Payment = (props: any) => {
-    const [numbers , setNumbers]: any = useState(1);
+    const [loading , setLoading] = useState(false);
     const [city,setCity] = useState([]);
     const [district,setDistrict] = useState([]);
     const [commune,setCommune] = useState([]);
@@ -26,7 +26,11 @@ const Payment = (props: any) => {
 
     }
     const handleSubmit = (e: any) => {
+       setLoading(true)
         apis.CreateOrder({idUser: idUser,infor: e, product: prop}).then(({data}: {data: Irespone})=> {
+           if(data){
+              setLoading(false)
+           }
           if(data.status === SUCCESS){
              apis.deleteStore(idUser).then(({data}: {data: Irespone})=>{
                 if(data.status === SUCCESS){
@@ -164,7 +168,7 @@ const Payment = (props: any) => {
                   
                </div>
                <div className="py-3 order-form_text">Bạn đặt hàng và thanh toán sau khi nhân viên bưu điện đưa hàng đến nơi và thu tiền tận nhà bạn</div>
-               <Button htmlType="submit" className="order-form_submit">Đặt hàng</Button>
+               <Button htmlType="submit" className="order-form_submit">{loading && <Spin />} Đặt hàng</Button>
                </div>
                </div>
                </Form>

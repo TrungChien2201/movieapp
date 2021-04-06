@@ -5,15 +5,20 @@ import { Irespone } from '../../../constants/interface';
 import './style.scss';
 import { useHistory } from 'react-router';
 import { SUCCESS } from '../../../constants';
+import LoadingPage from '../../../components/LoadingPage';
 const StoreProduct = () => {
   const userId = localStorage.getItem('id');
   const [store, setStore] = useState([]);
-  const [number , setNumber]: any = useState(1);
+  const [loading , setLoading] = useState(true);
   const [count, setCount] = useState(0);
+  
   const history = useHistory()
   React.useEffect(()=> {
-     apis.getStore(userId).then(({ data }: {data: Irespone}) => {setStore(data?.data?.store);
-      const counts =  data?.data?.store.map((el: any) => (el.price_sale * el.total))
+     apis.getStore(userId).then(({ data }: {data: Irespone}) => {
+        setLoading(false);
+      if(data.data.store !== [null] && data.data.store.length > 0){
+        setStore(data?.data?.store);
+           const counts = data?.data?.store.length > 0 && data?.data?.store.map((el: any) => (el.price_sale * el.total))
       console.log(counts);
       let i;
       let countsss = 0;
@@ -21,6 +26,8 @@ const StoreProduct = () => {
         countsss = countsss + counts[i]
       }
        setCount(countsss)
+      }
+     
     })
       
     },[])
@@ -42,6 +49,10 @@ const deleteProduct = (id: String) => {
           });
       }
   })
+}
+
+if(loading){
+    return <LoadingPage />
 }
     return (
         <div className="store-user">
@@ -68,7 +79,7 @@ const deleteProduct = (id: String) => {
                 
                 <tbody>
                 {
-                    Array.isArray(store) && store?.map((item: any, index: number)=> (
+                   store.length > 0 && Array.isArray(store) && store?.map((item: any, index: number)=> (
                         
                        <tr key={index}>
                         <td>

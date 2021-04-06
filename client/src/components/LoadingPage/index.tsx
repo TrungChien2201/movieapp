@@ -4,7 +4,7 @@ import { Spin } from 'antd'
 const LoadingPage = () => {
     
   return (
-    <div className="example" style={{position: 'fixed',top: '40px',width: '100%',textAlign: 'center'}}>
+    <div className="example" style={{position: 'fixed',top: '150px', left: '0', right:'0',width: '100%',textAlign: 'center'}}>
     <Spin />
   </div>
   )

@@ -5,9 +5,12 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { SUCCESS } from '../../../constants';
 import { Irespone } from '../../../constants/interface'
 import ModalEditAccount from './modalEdit';
+import LoadingPage from '../../../components/LoadingPage';
 const MangerAccount = () => {
     const [account, setAccount] = useState([]);
     const [visible, setVisible] = useState(false);
+    const [loading, setLoading] = useState(true);
+
     const [data, setData] = useState();
     
     const columns = [
@@ -70,7 +73,8 @@ const MangerAccount = () => {
  React.useEffect(()=> {
      apis.getAccount().then(({data}: {data: Irespone})=>{
         if(data.status === SUCCESS){
-           setAccount(data.data)
+           setAccount(data.data);
+           setLoading(false)
         }
      })
  },[])
@@ -98,6 +102,10 @@ const MangerAccount = () => {
            setVisible(false)
        }
    })
+ }
+
+ if(loading){
+   return <LoadingPage />
  }
   return(
       <div>

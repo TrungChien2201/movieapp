@@ -6,24 +6,37 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import ReactPlayer from "react-player/lazy";
 import { Link } from "react-router-dom";
+import LoadingPage from "../../../components/LoadingPage";
 
 const HomePage = () => {
   const [product, setProduct] = useState([]);
   const [current, setCurrent] = useState(1);
-
+  const [loading,setLoading] = useState(true);
   const handleChangePage = (page: number) => {
     setCurrent(page);
+    setLoading(true);
     apis
       .getProductPage(page)
-      .then((resp: any) => setProduct(resp.data.product));
+      .then((resp: any) => {
+        setProduct(resp.data.product);
+        setLoading(false);
+      });
   };
   const settings = {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
   React.useEffect(() => {
-    apis.getProductPage(1).then((resp: any) => setProduct(resp.data.product));
+    apis.getProductPage(1).then((resp: any) => {
+      if(resp){
+        setProduct(resp.data.product);
+        setLoading(false);
+      }
+      });
   }, []);
+  if(loading){
+    return <LoadingPage />
+  }
   return (
     <>
       <div className="home-page container">

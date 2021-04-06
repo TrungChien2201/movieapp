@@ -128,7 +128,7 @@ SearchProduct = (req,res) => {
       return res.status(400).json({status: 'ERROR',message: 'Product not found'})
     }
     product.forEach(el => {
-      if(el.title.toLowerCase().includes(req.params.search) === true){
+      if(el.title.toLowerCase().includes(req.params.search.toLowerCase()) === true){
         result.push(el)
       }
     })

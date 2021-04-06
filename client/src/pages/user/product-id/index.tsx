@@ -6,6 +6,8 @@ import { PhoneOutlined } from "@ant-design/icons";
 import "./style.scss";
 import 'font-awesome/css/font-awesome.min.css';
 import { SUCCESS } from "../../../constants";
+import ReactImageZoom from 'react-image-zoom';
+import LoadingPage from "../../../components/LoadingPage";
 const { Panel } = Collapse;
 const ProductDetail = () => {
   const params: any = useParams();
@@ -13,9 +15,16 @@ const ProductDetail = () => {
   const [color, setColor]: any = useState("");
   const [size, setSize]: any = useState("");
   const [number,setNumber] = useState(1);
+  const [loading,setLoading] =useState(true);
   const history = useHistory();
+  const image = { height: 800, zoomWidth: 1000, img: `${product?.image}`};
   React.useEffect(() => {
-    apis.getProductDetail(params.id).then((resp) => setProduct(resp.data.data));
+    apis.getProductDetail(params.id).then((resp) => {
+      if(resp){
+        setProduct(resp.data.data);
+        setLoading(false);
+      }
+      });
   }, [params]);
 
   const handleColor = (e: string) => {
@@ -42,7 +51,7 @@ const ProductDetail = () => {
     }
     
   }
-
+ 
   const handleAddition = () => {
     setNumber(number + 1)
   }
@@ -75,17 +84,21 @@ const ProductDetail = () => {
       {icon: <i className="fas fa-history"></i>,title: 'Đổi hàng như thế nào?',text: 'Việc đổi hàng rất dễ dàng và chúng tôi luôn muốn khách hàng ưng ý nhất. Hãy liên hệ fanpage để đổi!'},
       {icon: <i className="fas fa-expand-alt"></i>,title: 'Chọn sai size giày?',text: 'Bạn có thể qua cửa hàng hoặc gửi lại để đổi hàng với sản phẩm mới 100%. Còn nguyên tem mác, hoá đơn mua hàng.'},
   ]
-  console.log(color, "color");
+
+  if(loading){
+    return <LoadingPage />
+  }
   return (
       <>
     <div className="page-detail d-flex">
       <div className="slide-image col-6">
-        <Image
+        {/* <Image
           style={{ objectFit: "cover" }}
           width="90%"
           height={800}
           src={`${product?.image}`}
-        />
+        /> */}
+        <ReactImageZoom  {...image}/>
       </div>
       <div className="col-6 description-product">
         <div className="description-product_layout">

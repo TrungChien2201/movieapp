@@ -12,7 +12,7 @@ const OrderForm = () => {
     React.useEffect(()=> {
         apis.getOrder(idUser).then(({data}: {data: Irespone})=>{
          if(data.status === SUCCESS){
-            setOrder(data.data)
+            setOrder(data.data.reverse())
          }
         })
     },[])

@@ -5,6 +5,10 @@
       img{
         border-bottom: 1px solid #e0e0e7;
         padding-bottom: 50px;
+        width: 90% !important;
+      }
+      .js-image-zoom__zoomed-image{
+        z-index: 100;
       }
     
   }

@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --inspect index.js"
+    "dev": "nodemon --inspect index.js",
+    "start": "node index.js"
   },
   "dependencies": {
     "@google-cloud/storage": "^5.8.1",

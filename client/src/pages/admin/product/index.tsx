@@ -15,12 +15,14 @@ import apis from "../../../api";
 import ModalAntd from "../../../components/Modal";
 import { SUCCESS } from "../../../constants";
 import './style.scss';
+import LoadingPage from "../../../components/LoadingPage";
+import ButtonCustom from "../../../components/Button";
 
 const ManageProduct = () => {
   const [form] = Form.useForm();
   const [url, setUrl] = useState("");
   const [visible, setVisible] = useState(false);
-  const [visibles, setVisibles] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [edit, setEdit] = useState(false);
   const [keySearch,setKeySearch] = useState('');
   const [product, setProduct]: any = useState([]);
@@ -40,7 +42,12 @@ const ManageProduct = () => {
     setUrl('');
   };
   const handleGetProduct  = () => {
-    apis.getProduct().then((resp) => setProduct(resp.data.data));
+    apis.getProduct().then((resp) => {
+      if(resp.data.status === SUCCESS){
+        setProduct(resp.data.data);
+        setLoading(false)
+      }
+    });
   }
   React.useEffect(() => {
     handleGetProduct();
@@ -158,20 +165,24 @@ const ManageProduct = () => {
       setProduct(resp.data.result)
     })
   }
+
+  if(loading){
+    return <LoadingPage />
+  }
   return (
     <>
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between pt-4">
         <Form style={{ width: "40%", display: "flex" }}>
           <Form.Item style={{ width: "80%" }}>
             <Input onChange={handleSearchChange}/>
           </Form.Item>
           <Form.Item>
-            <Button style={{borderLeft: 'none'}} onClick={handleSearch}>Search</Button>
+            <Button style={{borderLeft: 'none', height: '40px'}} onClick={handleSearch}><i className="fas fa-search"></i></Button>
           </Form.Item>
         </Form>
-        <Button type="primary" onClick={() => setVisible(true)}>
+        <ButtonCustom mode="blue" onClick={() => setVisible(true)}>
           + Create Product
-        </Button>
+        </ButtonCustom>
         <ModalCreateProduct
           handleEdit={handleEdit}
           setEdit={setEdit}
@@ -185,7 +196,7 @@ const ManageProduct = () => {
           handleSubmit={handleSubmit}
         />
       </div>
-      <div className="product-content">
+      <div className="product-content pt-3">
         <Table columns={columns} dataSource={product} size="middle" />
       </div>
     </>

@@ -32,8 +32,12 @@ export const getOrder = id => axios.get(`/api/get-order/${id}`);
 // admin
 
 export const getAccount = () => axios.get(`/api/get-account`);
+export const getAllOrder = () => axios.get(`/api/get-all-order`);
 export const deleteAccount = id => axios.delete(`/api/delete-account/${id}`);
 export const editAccount = payload => axios.put(`/api/edit-account`,payload);
+export const deleteOrder = id => axios.delete(`/api/delete-order/${id}`);
+export const editOrder = payload => axios.put(`/api/edit-order`, payload);
+
 
 const apis = {
     insertMovie,
@@ -64,7 +68,10 @@ const apis = {
     // admin
     getAccount,
     deleteAccount,
-    editAccount
+    editAccount, 
+    getAllOrder, 
+    deleteOrder, 
+    editOrder
     
 }
 
