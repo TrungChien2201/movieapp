@@ -105,7 +105,7 @@ const ProductDetail = () => {
           <h2 className="description-product_title">{product.title}</h2>
           <p className="description-product_intro">
             Chất liệu cao cấp, bền đẹp theo thời gian. Thiết kế thời trang. Kiểu
-            dáng phong cách độ bền cao. Dễ phối đồ.
+            dáng phong cách độ bền cao. Dễ phối đồ..
           </p>
           <p>
             <span className="description-product_price">{product.price}đ</span>{" "}
