@@ -75,7 +75,10 @@
       border: 5px dashed #f1f1f1;
       padding: 15px;
       color: #9a9a9d;
-      i {
+      div{
+        padding: 10px 0px;
+      }
+      svg {
         padding: 1rem;
         border-radius: 50%;
         width: 50px;
@@ -95,6 +98,10 @@
           background-color: #ffd0d0 !important;
           color: #d45757 !important;
         }
+      }
+      span{
+        align-items: center;
+        line-height: 50px;
       }
     }
     .preservation {

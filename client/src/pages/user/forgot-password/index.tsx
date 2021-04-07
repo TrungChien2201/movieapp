@@ -10,7 +10,6 @@ const ForgotPassword = () => {
     const handleSubmit = async(e:any) => {
         
        await apis.forgotPassword(user).then(resp => {
-           console.log(resp)
        })
     }
     return (

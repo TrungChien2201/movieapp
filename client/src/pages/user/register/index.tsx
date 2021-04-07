@@ -13,9 +13,7 @@ const Register = () => {
   const handleRegister = async(e:any) => {
     e.preventDefault();
     await api.register(value).then(resp => {
-      console.log(resp)
     })
-   console.log(value)
   }
    return (
      <Form name="formRegister" initialValues={{ remember: true }}

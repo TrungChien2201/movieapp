@@ -8,7 +8,9 @@ import {
   DesktopOutlined,
   ContainerOutlined,
   MailOutlined,
+  
 } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const { SubMenu } = Menu;
 const MenuAdmin = (props: any) => {
@@ -30,10 +32,10 @@ const MenuAdmin = (props: any) => {
         >
      
           <Menu.Item key="product" icon={<PieChartOutlined />}>
-            Sản phẩm
+            <Link to="/admin/create-product">Sản phẩm </Link>
           </Menu.Item>
           <Menu.Item key="order" icon={<DesktopOutlined />}>
-            Đơn hàng
+          <Link to="/admin/order" > Đơn hàng </Link>
           </Menu.Item>
           <Menu.Item key="account" icon={<ContainerOutlined />}>
             Tài khoản

@@ -16,7 +16,8 @@ const Order = new Schema({
       sum_price: {type: Number, required: true},
       store: {type: Array,required: true}
   },
-  status: {type: Number}
+  status: {type: Number},
+  status_Order: {type: Number},
 },
 {timestamps: true}
 

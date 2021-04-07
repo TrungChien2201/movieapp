@@ -6,6 +6,8 @@ import './style.scss';
 import { useHistory } from 'react-router';
 import { SUCCESS } from '../../../constants';
 import LoadingPage from '../../../components/LoadingPage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 const StoreProduct = () => {
   const userId = localStorage.getItem('id');
   const [store, setStore] = useState([]);
@@ -19,7 +21,6 @@ const StoreProduct = () => {
       if(data.data.store !== [null] && data.data.store.length > 0){
         setStore(data?.data?.store);
            const counts = data?.data?.store.length > 0 && data?.data?.store.map((el: any) => (el.price_sale * el.total))
-      console.log(counts);
       let i;
       let countsss = 0;
       for(i=0; i< counts.length; i++){
@@ -102,7 +103,7 @@ if(loading){
                     ))
                 }
                 <tr>
-                    <td></td>
+                    <td><Button className="btn-add-product" onClick={()=>history.push('/')}><FontAwesomeIcon icon={faCartPlus} /> Mua thêm</Button></td>
                     <td colSpan={2}><Button onClick={handlePayment} className="btn-payment">Thanh toán</Button></td>
 
                     <td></td>

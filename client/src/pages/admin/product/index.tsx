@@ -43,9 +43,12 @@ const ManageProduct = () => {
   };
   const handleGetProduct  = () => {
     apis.getProduct().then((resp) => {
+      if(resp){
+        setLoading(false)
+      }
       if(resp.data.status === SUCCESS){
         setProduct(resp.data.data);
-        setLoading(false)
+        
       }
     });
   }
@@ -118,7 +121,6 @@ const ManageProduct = () => {
       if (resp.data.status === SUCCESS) {
         notification.success({ message: "Delete success" });
         const dataNew = product?.filter((el: any) => el._id !== e);
-        console.log(dataNew);
         setProduct(dataNew);
       }
     });
@@ -133,7 +135,6 @@ const ManageProduct = () => {
   const handleEdit = (e: any) => {
       setVisible(false)
       setEdit(false)
-      console.log(e)
        apis.updateProduct({id: e.id, data: e?.e}).then((resp: any)=> {
            if(resp?.data.status === SUCCESS){
                notification.success({message: 'Edit success'});
@@ -161,14 +162,13 @@ const ManageProduct = () => {
 
   const handleSearch =() => {
     apis.searchProduct(keySearch).then((resp: any) =>{
-      console.log(resp)
       setProduct(resp.data.result)
     })
   }
 
-  if(loading){
-    return <LoadingPage />
-  }
+  // if(loading){
+  //   return <LoadingPage />
+  // }
   return (
     <>
       <div className="d-flex justify-content-between pt-4">

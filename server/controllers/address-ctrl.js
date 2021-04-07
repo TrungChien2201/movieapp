@@ -7,7 +7,6 @@ getCity = (req,res) => {
 
 getDistrict = (req,res) => {
   const cityCode = req.params.city;
-  console.log(`req`,req.params);
   const district = filter(data , ['province_name', cityCode]);
   const newData = uniqBy(district , 'district_code')
   if(!cityCode){

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef   } from "react";
 import { Image, Pagination } from "antd";
 import "./style.scss";
 import apis from "../../../api";
@@ -7,11 +7,12 @@ import { Carousel } from "react-responsive-carousel";
 import ReactPlayer from "react-player/lazy";
 import { Link } from "react-router-dom";
 import LoadingPage from "../../../components/LoadingPage";
-
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 const HomePage = () => {
   const [product, setProduct] = useState([]);
   const [current, setCurrent] = useState(1);
   const [loading,setLoading] = useState(true);
+  const message: any = useRef();
   const handleChangePage = (page: number) => {
     setCurrent(page);
     setLoading(true);
@@ -26,6 +27,7 @@ const HomePage = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
   React.useEffect(() => {
     apis.getProductPage(1).then((resp: any) => {
       if(resp){
@@ -66,6 +68,7 @@ const HomePage = () => {
               </div>
             </div>
           </div>
+          
           <div className="home-content">
             <h2 className="home-content-title">Sản phẩm của shop</h2>
             <div className="row">
@@ -121,7 +124,6 @@ const HomePage = () => {
               emulateTouch={true}
               infiniteLoop={true}
               onChange={(e) => {
-                console.log(e);
               }}
             >
               <div className="slide-item">

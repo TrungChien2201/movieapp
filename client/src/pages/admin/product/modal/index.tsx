@@ -46,17 +46,13 @@ const ModalCreateProduct = (props: Props) => {
     }
   };
   const handleCheck = (e: any) => {
-    console.log(e.target.checked);
   };
 
   const handleChangeColor = (e: any) => {
-    console.log(e);
   };
 
   const handleChangeSize = (e: any) => {
-    console.log(e)
   }
-  console.log(dataEdit)
   React.useEffect(() => {
     if (url) {
       form.setFieldsValue({ image: url });

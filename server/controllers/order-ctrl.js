@@ -5,13 +5,13 @@ CreateOrder = (req,res) => {
     if(!body){
         return res.status(400).json({status: 'ERROR', message: 'body request null'})
     }
-    const order = new Order({...body, status: 0})
+    const order = new Order({...body, status: 0, status_Order: 1})
     if(!order){
         return res.status(400).json({status: 'ERROR', message: 'Not Create Order - Form'})
     }
     order.save()
       .then(()=> {
-        return res.status(200).json({status: 'SUCCESS', message: 'Create order Success'});
+        return res.status(200).json({status: 'SUCCESS', message: 'Create order Success', orderId: order._id});
 
       })
       .catch(err => {
@@ -47,7 +47,6 @@ getAllOrder = async(req, res) => {
 }
 
 deleteOrder = async(req, res) => {
-  console.log(req.params);
   const id = req.params.id
   await Order.findByIdAndDelete({_id: id}, (err, order)=>{
      if(err){
@@ -62,7 +61,6 @@ deleteOrder = async(req, res) => {
 
 editOrder = async(req,res) => {
   const body = req.body;
-  console.log(`body`,body);
   if(!body){
     return res.status(400).json({status: 'ERROR', message: 'Body request not found'});
   }

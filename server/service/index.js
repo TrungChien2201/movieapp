@@ -5,9 +5,7 @@ const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const sendEmail = require('../_helpers/send-email');
 async function forgotPassword( user , origin) {
-    console.log(`username`,user);
     const account = await Login.findOne({ username: user });
-    console.log(`acc`,account);
     // always return ok response to prevent email enumeration
     if (!account) return;
 
@@ -25,10 +23,8 @@ function randomTokenString() {
     return crypto.randomBytes(40).toString('hex');
 }
 async function sendPasswordResetEmail(account, origin) {
-    console.log(`account`,account);
     let message;
     if (origin) {
-        console.log('origin',origin)
         const resetUrl = `${origin}/account/reset-password?token=${account.resetToken.token}`;
         message = `<p>Please click the below link to reset your password, the link will be valid for 1 day:</p>
                    <a href="${resetUrl}">${resetUrl}</a>`;

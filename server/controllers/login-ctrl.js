@@ -7,7 +7,6 @@ const accountService = require('../service');
 // const sendMail = require('_helpers/send-email');
 CreateLogin = (req, res) => {
   const body = req.body;
-  console.log(`body`, req.body);
   if (!body) {
     return res.status(400).json({
       status: 'ERROR',
@@ -21,12 +20,10 @@ CreateLogin = (req, res) => {
         .status(201)
         .json({ status: "ERROR", message: "Login fail", error: err });
     }
-    console.log(`run here`, login);
     if(!login){
       return res.status(403).json({status: 'ERROR',message: 'Fail'})
     }
     while (login.username === body.username && login.password === body.password) {
-      console.log(`true`);
       return res
         .status(200)
         .json({ status: "SUCCESS", message: "Login success", accessToken: login.accessToken,userId: login._id , rule: login.rule});
@@ -37,7 +34,6 @@ CreateLogin = (req, res) => {
 
 Register = (req, res) => {
   const body = req.body;
-  console.log(`body`, body);
   if (!body) {
     return res
       .status(400)
@@ -69,7 +65,6 @@ Register = (req, res) => {
 };
 
 ForgotPassword = async(req,res) => {
-console.log(``, req.body.username);
 accountService.forgotPassword(req.body.username, req.get('origin'))
   .then(() =>res.json({status: 'SUCCESS', message: 'Please check your email for password reset instructions' }))
   .catch(err => {

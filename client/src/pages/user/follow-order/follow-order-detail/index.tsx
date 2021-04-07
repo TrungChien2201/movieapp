@@ -7,7 +7,6 @@ import './style.scss';
 const OrderDetail = () => {
     const [orderDetail,setOrderDetail]: any = useState('');
     const history: any = useHistory();
-    console.log(history.location.state)
     React.useEffect(()=>{
         if(!history.location.state){
             history.replace('/order-form');

@@ -12,12 +12,20 @@ import StoreProduct from '../../pages/user/store';
 import Payment from '../../pages/user/store/component/payment';
 import OrderForm from '../../pages/user/follow-order';
 import OrderDetail from '../../pages/user/follow-order/follow-order-detail';
-
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 const LayoutBlank  = () => {
     return (
+        <>
+         <MessengerCustomerChat
+          pageId="105721911609064"
+          appId="286695432832368"
+         
+        />
         <Router>
             <Header />
             <div style={{minHeight: 'calc(100vh - 400px)'}}>
+            {/* <div className="fb-customerchat" id="286695432832368">Chat</div> */}
+         
             <Switch>
                
                 <Authorzited path="/movies/list" component={MoviesList} />
@@ -36,6 +44,7 @@ const LayoutBlank  = () => {
             </div>
             <Footer />
         </Router>
+        </>
     )
 }
 export default LayoutBlank;

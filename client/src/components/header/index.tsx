@@ -3,6 +3,9 @@ import { Menu , Image} from "antd";
 import { Link } from "react-router-dom";
 import {AppstoreAddOutlined,SearchOutlined } from '@ant-design/icons';
 import './style.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell, faSearch, faCartPlus } from '@fortawesome/free-solid-svg-icons'
+
 const Header = () => {
   return (
     <>
@@ -24,7 +27,7 @@ const Header = () => {
         </Menu>
       </div>
       <div className="d-flex w-100 justify-content-between header-bottom">
-      <Image src={`/images/logo.jpg`}/>
+      <Image src={`/images/logo.png`}/>
         <Menu mode="horizontal" className="menu">
           <Menu.Item key="point">
             <Link to="/">Giày Nike</Link>
@@ -41,12 +44,13 @@ const Header = () => {
         </Menu>
         <Menu mode="horizontal" className="icon">
           <Menu.Item key="point">
-            <Link to="/"><i className="fas fa-search"></i></Link>
+            <Link to="/"><FontAwesomeIcon icon={faSearch} /></Link>
           </Menu.Item>
           <Menu.Item key="order">
-            <Link to="/store"><i className="fas fa-cart-plus"></i></Link>
+            <Link to="/store"><FontAwesomeIcon icon={faCartPlus} /></Link>
           </Menu.Item>
         </Menu>
+        
 </div>
     </>
   );

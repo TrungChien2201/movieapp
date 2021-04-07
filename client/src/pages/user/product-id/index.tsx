@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { useHistory, useParams } from "react-router";
 import apis from "../../../api";
-import { Image, Button, Collapse } from "antd";
+import { Image, Button, Collapse, notification } from "antd";
 import { PhoneOutlined } from "@ant-design/icons";
 import "./style.scss";
 import 'font-awesome/css/font-awesome.min.css';
 import { SUCCESS } from "../../../constants";
 import ReactImageZoom from 'react-image-zoom';
 import LoadingPage from "../../../components/LoadingPage";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { PayPalButton } from "react-paypal-button-v2";
+import {faCheckCircle , faTruck, faShieldAlt, faExchangeAlt , faAdjust, faMedal, faThumbsUp,faTimes, faClock,faHistory, faExpandAlt} from '@fortawesome/free-solid-svg-icons'
 const { Panel } = Collapse;
 const ProductDetail = () => {
   const params: any = useParams();
@@ -36,7 +39,6 @@ const ProductDetail = () => {
   };
 
   const renderDescription = (value: string) => {
-      console.log(value?.[0])
       if(value?.includes('\n')){
           const data = value?.replace('\n', '\n * ') 
         return data
@@ -69,20 +71,21 @@ const ProductDetail = () => {
       }})
       .then((resp: any) => {
         if(resp.data.status === SUCCESS){
-          history.push('/store')
+          notification.success({message: "Đã thêm sản phẩm vào giỏ hàng"});
+          history.replace('/store');
         }
       })
   }
 
   const note_data = [
-      {icon: <i className="far fa-check-circle"></i>, title: 'Chất lượng sản phẩm?', text: 'Sản phẩm luôn được MENSHOP kiểm định, đánh giá với chất lượng cao nhất trước khi đến tay khách hàng!'},
-      {icon: <i className="fas fa-adjust"></i>, title: 'Sai màu sản phẩm?', text: 'Vì 1 số yếu tố khách quan như độ sáng màn hình, chất lượng màn hình nên sản phẩm có thể ko đúng màu.'},
-      {icon: <i className="fas fa-medal"></i>,title: 'Hàng có sẵn không?' ,text: 'Sản phẩm hiện có sẵn tại hệ thống cửa hàng XSHOP và online tại website.'},
-      {icon: <i className="fas fa-thumbs-up"></i>,title: 'Bảo hành sản phẩm' ,text: 'Sản phẩm được bảo hành trong 30 ngày với bất kỳ lỗi nào. Hàng SALE không được bảo hành.'},
-      {icon: <i className="far fa-clock"></i>,title: 'Thời gian giao hàng?',text: 'Chúng tôi sử dụng đơn vi vận chuyển uy tín và nhanh chóng nhất, thời dự kiến từ 1-4 ngày tuy khu vực.'},
-      {icon: <i className="fas fa-clock"></i>,title: 'Thời gian làm việc?',text: 'Hệ thống cửa hàng và Online làm việc từ 8:30 - 22:00 hàng ngày.'},
-      {icon: <i className="fas fa-history"></i>,title: 'Đổi hàng như thế nào?',text: 'Việc đổi hàng rất dễ dàng và chúng tôi luôn muốn khách hàng ưng ý nhất. Hãy liên hệ fanpage để đổi!'},
-      {icon: <i className="fas fa-expand-alt"></i>,title: 'Chọn sai size giày?',text: 'Bạn có thể qua cửa hàng hoặc gửi lại để đổi hàng với sản phẩm mới 100%. Còn nguyên tem mác, hoá đơn mua hàng.'},
+      {icon: <FontAwesomeIcon icon={faCheckCircle}/>, title: 'Chất lượng sản phẩm?', text: 'Sản phẩm luôn được MENSHOP kiểm định, đánh giá với chất lượng cao nhất trước khi đến tay khách hàng!'},
+      {icon:<FontAwesomeIcon icon={faAdjust}/>, title: 'Sai màu sản phẩm?', text: 'Vì 1 số yếu tố khách quan như độ sáng màn hình, chất lượng màn hình nên sản phẩm có thể ko đúng màu.'},
+      {icon: <FontAwesomeIcon icon={faMedal}/> ,title: 'Hàng có sẵn không?' ,text: 'Sản phẩm hiện có sẵn tại hệ thống cửa hàng XSHOP và online tại website.'},
+      {icon: <FontAwesomeIcon icon={faThumbsUp}/>,title: 'Bảo hành sản phẩm' ,text: 'Sản phẩm được bảo hành trong 30 ngày với bất kỳ lỗi nào. Hàng SALE không được bảo hành.'},
+      {icon: <FontAwesomeIcon icon={faClock}/>,title: 'Thời gian giao hàng?',text: 'Chúng tôi sử dụng đơn vi vận chuyển uy tín và nhanh chóng nhất, thời dự kiến từ 1-4 ngày tuy khu vực.'},
+      {icon: <FontAwesomeIcon icon={faTimes}/>,title: 'Thời gian làm việc?',text: 'Hệ thống cửa hàng và Online làm việc từ 8:30 - 22:00 hàng ngày.'},
+      {icon: <FontAwesomeIcon icon={faHistory}/>,title: 'Đổi hàng như thế nào?',text: 'Việc đổi hàng rất dễ dàng và chúng tôi luôn muốn khách hàng ưng ý nhất. Hãy liên hệ fanpage để đổi!'},
+      {icon: <FontAwesomeIcon icon={faExpandAlt}/>,title: 'Chọn sai size giày?',text: 'Bạn có thể qua cửa hàng hoặc gửi lại để đổi hàng với sản phẩm mới 100%. Còn nguyên tem mác, hoá đơn mua hàng.'},
   ]
 
   if(loading){
@@ -141,6 +144,7 @@ const ProductDetail = () => {
           </div>
           <h5 className="description-product_label">Số lượng</h5>
           <><Button onClick={handleSubtraction}>-</Button> <span className="px-2">{number}</span> <Button onClick={handleAddition}>+</Button></>
+          
           <div className="w-100">
             <Button onClick={handleSubmit} disabled={!color || !size} className="btn-submit">
               <p>Mua ngay</p>
@@ -151,7 +155,6 @@ const ProductDetail = () => {
               accordion
               expandIconPosition="right"
               expandIcon={(props: any) => {
-                console.log(props);
                 if (props.isActive) {
                   return (
                     <a
@@ -175,9 +178,9 @@ const ProductDetail = () => {
             >
               <Panel header="Chính sách giao hàng & đổi trả" key="1">
                 <div className="exchange">
-                    <p><i className="fas fa-truck "></i> Giao hàng hoàn toàn miễn phí 100%</p>
-                    <p><i className="fas fa-shield-alt"></i> An toàn với nhận hàng và trả tiền tại nhà</p>
-                    <p><i className="fas fa-exchange-alt"></i> Bảo hành đổi trả trong vòng 60 ngày</p>
+                    <div className="d-flex"><FontAwesomeIcon icon={faTruck}/> <span>Giao hàng hoàn toàn miễn phí 100%</span></div>
+                    <div className="d-flex"><FontAwesomeIcon icon={faShieldAlt}/> <span>An toàn với nhận hàng và trả tiền tại nhà</span></div>
+                    <div className="d-flex"><FontAwesomeIcon icon={faExchangeAlt}/> <span>Bảo hành đổi trả trong vòng 60 ngày</span></div>
 
                 </div>
               </Panel>

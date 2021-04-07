@@ -32,7 +32,6 @@ const Login = () => {
     else {
       await api.login(data).then((res) => {
       if (res.data.status === SUCCESS) {
-        console.log(res, 'res')
         localStorage.setItem("auth", res.data.accessToken);
         localStorage.setItem("id", res.data.userId);
         localStorage.setItem("rule", res.data.rule);

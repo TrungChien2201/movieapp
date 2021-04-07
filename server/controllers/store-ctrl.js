@@ -53,7 +53,6 @@ deleteStore = (req,res) => {
         return res.status(400).json({status: 'ERROR', message: 'Store not found'})
 
       }
-      console.log(`store`, store);
       store.delete()
       .then(()=> {
           return res.status(200).json({status: 'SUCCESS'})
@@ -71,7 +70,6 @@ deleteProductStore = (req, res) => {
       if(!store || store.length < 1){
           return res.status(400).json({status: 'ERROR', message: 'Store with id User not found'});
       }
-      console.log(`store`, store);
      const newStore = store.store.filter(el => el._id !== body.idProduct);
      store.store = newStore;
      store.save()

@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container px-0">
         <div className="row">
           <div className="col-12 col-sm-12 col-md-8 col-lg-4 col-xl-4 pl-0 footer-infor_shop">
-            <img src="/images/logo.jpg" />
+            <img src="/images/logo.png" />
             <div className="d-flex mt-4">
               <p className="footer-infor_shop-label">Hotline:</p>
               <p className="footer-infor_shop-content">035.397.1100</p>

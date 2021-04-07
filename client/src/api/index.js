@@ -1,29 +1,28 @@
-import axios from 'axios'
-
+import axios from 'axios';
+import env from "react-dotenv";
 const api = axios.create({
     baseURL: 'http://localhost:3001/api',
 })
-
-export const insertMovie = payload => api.post(`/movie`, payload)
-export const getAllMovies = () => api.get(`/movies`)
-export const updateMovieById = (id, payload) => api.put(`/movie/${id}`, payload)
-export const deleteMovieById = id => api.delete(`/movie/${id}`)
-export const getMovieById = id => api.get(`/movie/${id}`)
-export const login = payload => api.post(`/login`, payload)
-export const register  = payload => api.post(`/register`, payload)
-export const forgotPassword = payload => api.post(`/forgot`,payload)
-export const createProduct = payload => api.post(`/create-product`,payload)
-export const getProduct = () => api.get(`/get-product`)
-export const getProductDetail = id => api.get(`/product-detail/${id}`)
-export const deleteProduct = payload => api.delete(`/delete-product/${payload.id}`)
-export const updateProduct = payload => api.put(`/edit-product/${payload.id}`, payload.data)
-export const searchProduct = payload => api.get(`/search-product/${payload}`)
-export const getProductPage = page => api.get(`/product/${page}`)
-export const CreateStore = payload => api.post(`/create-store/${payload.id}`,payload.store)
-export const getStore = userId => api.get(`/get-store/${userId}`)
-export const deleteStore = id => api.delete(`/delete-store/${id}`);
-export const deleteProductStore = payload => api.post(`delete-product-store`, payload);
-export const getCity = () => axios.get('/api/city');
+export const insertMovie = payload => axios.post(`/api/movie`, payload)
+export const getAllMovies = () => axios.get(`/api/movies`)
+export const updateMovieById = (id, payload) => axios.put(`/api/movie/${id}`, payload)
+export const deleteMovieById = id => axios.delete(`/api/movie/${id}`)
+export const getMovieById = id => axios.get(`/api/movie/${id}`)
+export const login = payload => axios.post(`/api/login`, payload)
+export const register  = payload => axios.post(`/api/register`, payload)
+export const forgotPassword = payload => axios.post(`/api/forgot`,payload)
+export const createProduct = payload => axios.post(`/api/create-product`,payload)
+export const getProduct = () => axios.get(`/api/get-product`)
+export const getProductDetail = id => axios.get(`/api/product-detail/${id}`)
+export const deleteProduct = payload => axios.delete(`/api/delete-product/${payload.id}`)
+export const updateProduct = payload => axios.put(`/api/edit-product/${payload.id}`, payload.data)
+export const searchProduct = payload => axios.get(`/api/search-product/${payload}`)
+export const getProductPage = page => axios.get(`/api/product/${page}`)
+export const CreateStore = payload => axios.post(`/api/create-store/${payload.id}`,payload.store)
+export const getStore = userId => axios.get(`/api/get-store/${userId}`)
+export const deleteStore = id => axios.delete(`/api/delete-store/${id}`);
+export const deleteProductStore = payload => axios.post(`/api/delete-product-store`, payload);
+export const getCity = () => axios.get(`/api/city`);
 export const getDistrict = city => axios.get(`/api/district/${city}`);
 export const getCommune = district => axios.get(`/api/commune/${district}`);
 export const CreateOrder = payload => axios.post(`/api/create-order`, payload);
@@ -37,6 +36,7 @@ export const deleteAccount = id => axios.delete(`/api/delete-account/${id}`);
 export const editAccount = payload => axios.put(`/api/edit-account`,payload);
 export const deleteOrder = id => axios.delete(`/api/delete-order/${id}`);
 export const editOrder = payload => axios.put(`/api/edit-order`, payload);
+export const getNotify = () => axios.get(`/api/notify`);
 
 
 const apis = {
@@ -71,7 +71,8 @@ const apis = {
     editAccount, 
     getAllOrder, 
     deleteOrder, 
-    editOrder
+    editOrder,
+    getNotify
     
 }
 

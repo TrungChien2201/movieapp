@@ -9,8 +9,14 @@ import MangerAccount from '../../pages/admin/account';
 import socketIOClient from "socket.io-client";
 import Notify from './notify';
 import OrderForm from '../../pages/admin/order-form';
-import LoadingPage from '../../components/LoadingPage';
-const ENDPOINT  = "http://localhost:3002";
+import {Irespone} from '../../constants/interface';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell } from '@fortawesome/free-solid-svg-icons'
+import apis from '../../api';
+import { SUCCESS } from '../../constants';
+
+
+
 const LayoutAdmin = () => {
     const [collapse,setCollapse] = useState(false);
     const [showNoti,setShowNoti] = useState(false);
@@ -19,6 +25,7 @@ const LayoutAdmin = () => {
     const [count, setCount]: any = useState(0);
     const rule = localStorage.getItem("rule");
     const history = useHistory();
+    const ENDPOINT  = "http://localhost:3002";
     React.useEffect(()=> {
         if(rule !== '2'){
            window.location.href = "/"
@@ -34,6 +41,15 @@ const LayoutAdmin = () => {
         upgrade: false,
         rejectUnauthorized: false
     });
+    React.useEffect(()=> {
+        apis.getNotify().then(({data}:{data: Irespone}) =>{
+            if(data.status === SUCCESS){
+            setCount(data?.data?.length);
+            setData(data.data)
+            }
+         
+        })
+    },[])
     React.useEffect(() => {
         
         socket.on("Order", data => {
@@ -75,14 +91,15 @@ const LayoutAdmin = () => {
                         
                         <div onClick={handleShowNotify} style={{display: 'block', cursor: 'pointer'}}>
                             <Badge count={count !== 0 ? count : null}>
-                           <i onBlur={()=>setShowNoti(false)} style={{fontSize: '24px', color: '#675b5b'}} className="fas fa-bell"></i> 
+                            <FontAwesomeIcon icon={faBell} style={{fontSize: '24px', color: '#675b5b'}}/>
+                           {/* <i onBlur={()=>setShowNoti(false)} style={{fontSize: '24px', color: '#675b5b'}} className="fas fa-bell"></i>  */}
                         </Badge>
                             </div>
                           {showNoti && <Notify data={data} handlePreview={handlePreview}/>}
                         </div>
                     </div>
                     <div style={{marginTop: 70}}>
-
+                    
                     </div>
                     <Switch>
                         <Router>

@@ -134,9 +134,7 @@ const OrderForm = () => {
         setLoading(false);
       }
     });
-    socket.on("countAccess", data =>{
-      console.log(data)
-    })
+  
   }, []);
 
   const DeleteProduct = (id: string) => {
