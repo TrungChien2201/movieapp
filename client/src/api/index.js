@@ -10,6 +10,8 @@ export const deleteMovieById = id => axios.delete(`/api/movie/${id}`)
 export const getMovieById = id => axios.get(`/api/movie/${id}`)
 export const login = payload => axios.post(`/api/login`, payload)
 export const register  = payload => axios.post(`/api/register`, payload)
+export const searchAccount = keySearch => axios.get(`/api/search-account/${keySearch}`)
+export const updateAccount = payload => axios.put('/api/update-account',payload)
 export const forgotPassword = payload => axios.post(`/api/forgot`,payload)
 export const createProduct = payload => axios.post(`/api/create-product`,payload)
 export const getProduct = () => axios.get(`/api/get-product`)
@@ -27,7 +29,8 @@ export const getDistrict = city => axios.get(`/api/district/${city}`);
 export const getCommune = district => axios.get(`/api/commune/${district}`);
 export const CreateOrder = payload => axios.post(`/api/create-order`, payload);
 export const getOrder = id => axios.get(`/api/get-order/${id}`);
-
+export const SearchOrder = keySearch => axios.get(`/api/search-order/${keySearch}`);
+export const FilterProduct = type => axios.get(`/api/filter-product/${type}`);
 // admin
 
 export const getAccount = () => axios.get(`/api/get-account`);
@@ -47,6 +50,8 @@ const apis = {
     getMovieById,
     login,
     register,
+    searchAccount,
+    updateAccount,
     forgotPassword,
     createProduct,
     getProduct,
@@ -64,6 +69,8 @@ const apis = {
     getCommune,
     CreateOrder,
     getOrder,
+    SearchOrder,
+    FilterProduct,
 
     // admin
     getAccount,

@@ -13,6 +13,7 @@ import Payment from '../../pages/user/store/component/payment';
 import OrderForm from '../../pages/user/follow-order';
 import OrderDetail from '../../pages/user/follow-order/follow-order-detail';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
+import FilterProduct from '../../pages/user/filter-product';
 const LayoutBlank  = () => {
     return (
         <>
@@ -34,10 +35,10 @@ const LayoutBlank  = () => {
                 <Route path="/product/:id"  component={ProductDetail}/>
                 <Route path="/store"  component={StoreProduct} />
                 <Route path="/payment"  component={Payment} />
+                <Route path="/product-filter" exact component={FilterProduct} />
                 <Route path="/order-form"  component={OrderForm} />
                 <Route path="/follow-order-detail" exact  component={OrderDetail} />
                 <Route path="/register" exact component={Register} /> 
-                <Route path="/forgot" exact component={ForgotPassword} /> 
                 <Route path="/" exact component={HomePage} /> 
                 
             </Switch>
