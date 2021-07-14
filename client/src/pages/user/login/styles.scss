@@ -47,7 +47,7 @@ $white: #fff;
 		}
 		
      }
-     
+  
      &-action{
         .remember{
          color: #f35588;
@@ -103,6 +103,9 @@ $white: #fff;
     label{
        font-weight: bold;
        padding-top: 15px;
+    }
+    .ant-form-item-label{
+      width: 100%;
     }
   }
 }

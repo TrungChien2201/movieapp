@@ -14,14 +14,11 @@ import OrderForm from '../../pages/user/follow-order';
 import OrderDetail from '../../pages/user/follow-order/follow-order-detail';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
 import FilterProduct from '../../pages/user/filter-product';
+import Profile from '../../pages/user/profile';
 const LayoutBlank  = () => {
     return (
         <>
-         <MessengerCustomerChat
-          pageId="105721911609064"
-          appId="286695432832368"
-         
-        />
+    
         <Router>
             <Header />
             <div style={{minHeight: 'calc(100vh - 400px)'}}>
@@ -39,6 +36,7 @@ const LayoutBlank  = () => {
                 <Route path="/order-form"  component={OrderForm} />
                 <Route path="/follow-order-detail" exact  component={OrderDetail} />
                 <Route path="/register" exact component={Register} /> 
+                <Route path="/profile" exact component={Profile} /> 
                 <Route path="/" exact component={HomePage} /> 
                 
             </Switch>

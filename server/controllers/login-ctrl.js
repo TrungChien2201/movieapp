@@ -50,34 +50,47 @@ Register = (req, res) => {
       .status(400)
       .json({ status: "ERROR", message: "Body is not null" });
   }
-  const accessToken = jwt.sign(
-    { username: body.username, password: body.password },
-    accessTokenSecret
-  );
-  const login = new Login({
-    ...body,
-    accessToken,
-    rule: 1,
-    resetToken: { token: "", expires: "" },
-  });
-  if (!login) {
-    return res.status(400).json({ status: "ERROR", message: error });
-  }
-  login
-    .save()
-    .then(() => {
-      return res.status(200).json({
-        id: login._id,
-        status: "SUCCESS",
-        message: "Register success",
-      });
-    })
-    .catch((error) => {
-      return res.status(400).json({
-        error,
-        message: "Register fail!",
-      });
+  Login.findOne({ username: body.username }, (err, user) => {
+    if (err) {
+      return res.status(400).json({ status: 'ERROR', message: err });
+    }
+    if (user) {
+      return res.status(200).json({ status: 'ERROR', message: 'Email này đã được đăng ký' });
+    }
+    const accessToken = jwt.sign(
+      { username: body.username },
+      accessTokenSecret
+    );
+    const login = new Login({
+      ...body,
+      accessToken,
+      rule: 1,
+      resetToken: { token: "", expires: "" },
     });
+    if (!login) {
+      return res.status(400).json({ status: "ERROR", message: error });
+    }
+
+    console.log(login)
+    login
+      .save()
+      .then(() => {
+        return res.status(200).json({
+          id: login._id,
+          accessToken: login.accessToken,
+          rule: login.rule,
+          status: "SUCCESS",
+          message: "Register success",
+        });
+      })
+      .catch((error) => {
+        return res.status(400).json({
+          error,
+          message: "Register fail!",
+        });
+      });
+  })
+
 };
 
 ForgotPassword = async (req, res) => {
@@ -112,45 +125,45 @@ ForgotPassword = async (req, res) => {
 updateAccount = async (req, res) => {
   console.log(req.body)
   const code = req.body.code;
-  Login.findOne({'resetToken.token': code}, (err, account) => {
+  Login.findOne({ 'resetToken.token': code }, (err, account) => {
     console.log(account, 'account')
-    if(err){
-      return res.status(400).json({status: 'ERROR', message: err})
+    if (err) {
+      return res.status(400).json({ status: 'ERROR', message: err })
     }
-    if(!account || account.length < 1){
-      return res.status(200).json({status: 'ERROR', message: 'Not account', data: []})
+    if (!account || account.length < 1) {
+      return res.status(200).json({ status: 'ERROR', message: 'Not account', data: [] })
 
     }
-    
+
     console.log(account.resetToken.expires)
-    
-    if(account.resetToken.expires - Date.now() > 0){
+
+    if (account.resetToken.expires - Date.now() > 0) {
       account.password = req.body.password;
-    account 
-    .save()
-      .then(()=>{
-        return res.status(200).json({status: 'SUCCESS', message: 'Update password success'})
-      })
-      .catch((error)=>{
-        return res.status(400).json({status: 'ERROR',message: error});
-      })
+      account
+        .save()
+        .then(() => {
+          return res.status(200).json({ status: 'SUCCESS', message: 'Update password success' })
+        })
+        .catch((error) => {
+          return res.status(400).json({ status: 'ERROR', message: error });
+        })
     }
-    else return res.status(400).json({status: 'ERROR',message: 'Code update account expired!'});
+    else return res.status(400).json({ status: 'ERROR', message: 'Code update account expired!' });
   })
 };
 
-searchAccount = async(req,res) => {
+searchAccount = async (req, res) => {
   const result = [];
   const keySearch = req.params.search;
   console.log(keySearch)
   await Login.find({}, (err, order) => {
-    if(err){
-      return res.status(400).json({status: 'ERROR', message: err})
+    if (err) {
+      return res.status(400).json({ status: 'ERROR', message: err })
     }
-    if(!order || order.length < 1){
-      return res.status(200).json({status: 'SUCCESS',message: 'Order width name not found', data: []})
+    if (!order || order.length < 1) {
+      return res.status(200).json({ status: 'SUCCESS', message: 'Order width name not found', data: [] })
     }
-    if(order){
+    if (order) {
       order?.forEach((el) => {
         if (
           el.username.toLowerCase().includes(keySearch.toLowerCase()) ===
@@ -241,6 +254,28 @@ editAccount = (req, res) => {
   });
 };
 
+getProfile = async (req, res) => {
+  const userId = req.params.userId;
+  console.log(userId)
+  if (!userId) {
+    return res.status(400).json({
+      status: 'ERROR',
+      message: "User id is required"
+    })
+  }
+  await Login.findOne({ _id: userId }, (err, user) => {
+    if (err) {
+      return res.status(400).json({ status: 'ERROR', message: err });
+    }
+    if (!user || user.length < 1) {
+      return res.status(200).json({ status: 'SUCCESS', message: "Not found with id user", data: {} });
+    }
+    let { password, accessToken, ...profile } = user._doc;
+    console.log(profile)
+    return res.status(200).json({ status: "SUCCESS", data: profile })
+  })
+}
+
 module.exports = {
   CreateLogin,
   Register,
@@ -249,5 +284,6 @@ module.exports = {
   deleteAccount,
   editAccount,
   updateAccount,
-  searchAccount
+  searchAccount,
+  getProfile
 };
