@@ -33,12 +33,14 @@ const Header = () => {
     setVisible(true);
   };
 
-  const handleChangeInfo = useCallback(
-    () => {
-      history.push("/profile", {data})
-    },
-    [data],
-  )
+  const handleChangeInfo = useCallback(() => {
+    history.push("/profile", { data });
+  }, [data]);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    history.push("/");
+  };
 
   const menu = (
     <Menu>
@@ -46,7 +48,7 @@ const Header = () => {
         <div onClick={handleChangeInfo}>Thay đổi thông tin</div>
       </Menu.Item>
       <Menu.Item>
-       <div>Đăng xuất</div>
+        <div onClick={handleLogout}>Đăng xuất</div>
       </Menu.Item>
     </Menu>
   );
@@ -62,13 +64,28 @@ const Header = () => {
           <Menu.Item key="contact">
             <Link to="/">Liên hệ</Link>
           </Menu.Item>
+
           <Menu.Item key="profile">
-            <Dropdown overlay={menu} trigger={["click"]} placement="bottomRight" arrow>
-              <div className="fullname-profile">
-                {data?.firstname} {data?.lastname}{" "}
-                <FontAwesomeIcon icon={faSortDown} />
+            {data?.firstname && data?.lastname ? (
+              <Dropdown
+                overlay={menu}
+                trigger={["click"]}
+                placement="bottomRight"
+                arrow
+              >
+                <div className="fullname-profile">
+                  {data?.firstname} {data?.lastname}{" "}
+                  <FontAwesomeIcon icon={faSortDown} />
+                </div>
+              </Dropdown>
+            ) : (
+              <div
+                className="fullname-profile"
+                onClick={() => (window.location.href = "/login")}
+              >
+                Đăng nhập
               </div>
-            </Dropdown>
+            )}
           </Menu.Item>
         </Menu>
       </div>

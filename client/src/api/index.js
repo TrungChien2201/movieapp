@@ -32,8 +32,8 @@ export const getOrder = id => axios.get(`/api/get-order/${id}`);
 export const SearchOrder = keySearch => axios.get(`/api/search-order/${keySearch}`);
 export const FilterProduct = type => axios.get(`/api/filter-product/${type}`);
 export const getProfile = id => axios.get(`/api/get-profile/${id}`);
-
-
+export const updateProfile = payload => axios.put('/api/update-profile', payload);
+export const changePassword = payload => axios.put('/api/change-password', payload);
 // admin
 
 export const getAccount = () => axios.get(`/api/get-account`);
@@ -75,6 +75,8 @@ const apis = {
     SearchOrder,
     FilterProduct,
     getProfile,
+    updateProfile,
+    changePassword,
     // admin
     getAccount,
     deleteAccount,

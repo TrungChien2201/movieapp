@@ -276,6 +276,58 @@ getProfile = async (req, res) => {
   })
 }
 
+updateProfile = async (req,res) => {
+  userId = req.body.id;
+  await Login.findOne({_id: userId}, (err, user)=> {
+    if(err){
+      return res.status(400).json({status: 'ERROR', message: err})
+    }
+    if(!user){
+      return res.status(200).json({status: 'ERROR', message: 'User not found'});
+    }
+    user.firstname = req.body.firstname;
+    user.lastname = req.body.lastname;
+    user.phone = req.body.phone;
+    user.save()
+      .then(()=>{
+        return res.status(200).json({status: 'SUCCESS', message: "Update data success"})
+      })
+      .catch(err =>{
+        return res.status(400).json({status: 'ERROR', message: err});
+      })
+  })
+}
+
+changePassword = async(req,res) => {
+  const body = req.body;
+  console.log(body, 'body')
+ await Login.findOne({_id: body.id}, (err, user)=>{
+    if(err){
+      return res.status(400).json({status: 'ERROR', message: err});
+    }
+    if(!user){
+      return res.status(200).json({status: 'ERROR', message: 'User not found'});
+    }
+    console.log(user, 'user')
+    if(user){
+      if(user.password !== body.password){
+        return res.status(200).json({status: 'ERROR', message: 'old password is incorrect '})
+        }
+      if(user.password === body.password){
+      user.password = body.new_password
+      user.save()
+        .then(()=>{
+          return res.status(200).json({status: 'SUCCESS', message: "Change password success"});
+        })
+        .catch(err =>{
+          return res.status(400).json({status: 'ERROR', message: err})
+        })
+    }
+    }
+    
+  })
+}
+
 module.exports = {
   CreateLogin,
   Register,
@@ -285,5 +337,7 @@ module.exports = {
   editAccount,
   updateAccount,
   searchAccount,
-  getProfile
+  getProfile,
+  updateProfile, 
+  changePassword
 };
