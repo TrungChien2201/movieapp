@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 
 const { SubMenu } = Menu;
 const MenuAdmin = (props: any) => {
+  const rule = localStorage.getItem("rule");
   const { collapse, setCollapse } = props;
   const toggleCollapsed = () => {
     setCollapse(!collapse);
@@ -27,25 +28,40 @@ const MenuAdmin = (props: any) => {
         {collapse ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </Button>
       <Menu
-        defaultSelectedKeys={["dashboard"]}
         mode="inline"
         theme="dark"
         inlineCollapsed={collapse}
         style={{ minHeight: "150vh", transition: "all 0s" }}
       >
+        {(rule === '2' || rule === '3') && 
         <Menu.Item key="product" icon={<PieChartOutlined />}>
           <Link to="/admin/create-product">Sản phẩm </Link>
         </Menu.Item>
+        }
+        {(rule === '2' || rule === '3') && 
         <Menu.Item key="order" icon={<DesktopOutlined />}>
           <Link to="/admin/order-form"> Đơn hàng </Link>
         </Menu.Item>
+        }
+        {rule === '2'  && 
         <Menu.Item key="account" icon={<ContainerOutlined />}>
           <Link to="/admin/manager-account"> Tài khoản </Link>
         </Menu.Item>
+        }
+        {rule === '2'  && 
         <Menu.Item key="dashboard" icon={<ContainerOutlined />}>
           <Link to="/admin/statistical"> Thống kê </Link>
         </Menu.Item>
-        <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
+        }
+        {rule === '2'  && 
+        <Menu.Item key="member" icon={<ContainerOutlined />}>
+          <Link to="/admin/manager-employee"> Nhân viên</Link>
+        </Menu.Item>
+        }
+        <Menu.Item key="logout" icon={<ContainerOutlined />}>
+          <Link to="/login" onClick={()=>localStorage.clear()}>Đăng xuất</Link>
+        </Menu.Item>
+        {/* <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
           <Menu.Item key="sub2">Option 5</Menu.Item>
           <Menu.Item key="sub3">Option 6</Menu.Item>
           <Menu.Item key="sub4">Option 7</Menu.Item>
@@ -58,7 +74,7 @@ const MenuAdmin = (props: any) => {
             <Menu.Item key="sub11">Option 11</Menu.Item>
             <Menu.Item key="sub12">Option 12</Menu.Item>
           </SubMenu>
-        </SubMenu>
+        </SubMenu> */}
       </Menu>
     </div>
   );

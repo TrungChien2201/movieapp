@@ -11,6 +11,8 @@ const addressRouter = require('./routes/address-router')
 const OrderRouter = require('./routes/order-router');
 const NotifyRouter = require('./routes/notify-router');
 const PaymentRouter = require('./routes/payment');
+const EmployeeRouter = require('./routes/employee-router');
+const ProductHightLightRouter = require('./routes/productHightLight-router');
 const app = express();
 const path = require('path');
 const Order = require('./models/order-model');
@@ -86,6 +88,8 @@ app.use('/api', addressRouter)
 app.use('/api', OrderRouter)
 app.use('/api', NotifyRouter)
 app.use('/api', PaymentRouter)
+app.use('/api', EmployeeRouter);
+app.use('/api', ProductHightLightRouter);
 app.listen(apiPort, () => console.log(`Server running on port server ${apiPort}`));
 
 if (process.env.NODE_ENV === 'production') {

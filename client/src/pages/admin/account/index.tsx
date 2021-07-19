@@ -10,17 +10,19 @@ import {
   Form,
 } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { SUCCESS } from "../../../constants";
+import { ERROR_EXIT_ACCOUNT, SUCCESS } from "../../../constants";
 import { Irespone } from "../../../constants/interface";
 import ModalEditAccount from "./modalEdit";
 import LoadingPage from "../../../components/LoadingPage";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ButtonCustom from "../../../components/Button";
 const MangerAccount = () => {
   const [account, setAccount] = useState([]);
   const [visible, setVisible] = useState(false);
   const [loading, setLoading] = useState(true);
   const [keySearch, setKeySearch] = useState("");
+  const [edit, setEdit] = useState(false);
 
   const [data, setData] = useState();
 
@@ -48,7 +50,7 @@ const MangerAccount = () => {
       dataIndex: "rule",
       render: (text: string, record: any, index: number) => (
         <span key={`key--${index}`}>
-          {record.rule === 1 ? "Thường" : "Admin"}
+          {record.rule === 1 ? "Thường" : record.rule === 2 ? "Admin": "Nhân viên"}
         </span>
       ),
     },
@@ -60,6 +62,7 @@ const MangerAccount = () => {
           <Popconfirm
             onConfirm={() => DeleteProduct(record?._id)}
             placement="leftTop"
+            disabled={record.rule === 2}
             title="Bạn chắc chắn muốn xóa tài khoản này ?"
             okText="Yes"
             cancelText="No"
@@ -78,6 +81,7 @@ const MangerAccount = () => {
             onClick={() => {
               setVisible(true);
               setData(record);
+              setEdit(true)
             }}
             shape="circle"
           >
@@ -109,6 +113,19 @@ const MangerAccount = () => {
       }
     });
   };
+  
+  const CreateAccount = (e: any) =>{
+    apis.createAccount(e).then(({data}: {data: Irespone}) => {
+      console.log(data)
+      if(data.status === SUCCESS){
+        notification.success({message: 'Tạo tài khoản thành công'});
+        getAllAccount();
+      }
+      else if(data.ERROR_CODE === ERROR_EXIT_ACCOUNT){
+        notification.error({message: 'Tài khoản đã tồn tại'})
+      }
+    })
+  }
 
   const EditAccount = (e: any) => {
     apis.editAccount(e).then(({ data }: { data: Irespone }) => {
@@ -148,7 +165,8 @@ const MangerAccount = () => {
   }
   return (
     <div>
-      <Form style={{ width: "40%", display: "flex" }}>
+      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <Form style={{ width: "40%", display: "flex" }}>
         <Form.Item style={{ width: "80%" }}>
           <Input
             placeholder="Nhập tên tài khoản"
@@ -164,6 +182,11 @@ const MangerAccount = () => {
           </Button>
         </Form.Item>
       </Form>
+      <ButtonCustom mode="blue" onClick={() => setVisible(true)}>
+          + Tạo tài khoản
+        </ButtonCustom>
+      </div>
+      
       <Table
         style={{ width: "100%", marginTop: 10 }}
         columns={columns}
@@ -172,7 +195,10 @@ const MangerAccount = () => {
       {visible ? (
         <ModalEditAccount
           data={data}
+          edit={edit}
+          setEdit={setEdit}
           visible={visible}
+          CreateAccount={CreateAccount}
           setVisible={setVisible}
           EditAccount={EditAccount}
         />

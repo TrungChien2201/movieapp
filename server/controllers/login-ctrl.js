@@ -328,6 +328,38 @@ changePassword = async(req,res) => {
   })
 }
 
+createAccount = async(req,res) => {
+  const body = req.body;
+
+  if(!body){
+    return res.status(400).json({status: 'ERROR',message: "Body not found"});
+  }
+
+  await Login.findOne({username: body.username}, (err, result) => {
+    if(err){
+      return res.status({status: 'ERROR', message: err});
+    }
+    if(result){
+      return res.status(200).json({status: 'ERROR', message: 'Account already exists with email create', ERROR_CODE: 'ERROR.CREATE.ACCOUNT.EXIT'})
+    }
+    if(!result){
+      const account = new Login(body);
+      if(!account){
+       return res.status(200).json({status: 'ERROR', message: 'Cant not create accout'});
+     }
+     account.save()
+       .then(()=> {
+         return res.status(200).json({status: 'SUCCESS', message: 'Create account success'});
+       })
+       .catch(err => {
+         return res.status(400).json({status: 'ERROR', message: err});
+       })
+    }
+  })
+  
+}
+
+
 module.exports = {
   CreateLogin,
   Register,
@@ -339,5 +371,6 @@ module.exports = {
   searchAccount,
   getProfile,
   updateProfile, 
-  changePassword
+  changePassword,
+  createAccount
 };

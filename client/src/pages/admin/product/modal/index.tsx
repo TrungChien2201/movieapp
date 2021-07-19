@@ -40,7 +40,6 @@ const ModalCreateProduct = (props: Props) => {
     setShoeType
   } = props;
   const CreateProduct = (e: any) => {
-    debugger;
     if (edit) {
       if (e.price_sale) {
         handleEdit({

@@ -20,8 +20,8 @@ const Profile = () => {
       setDataProfile(data);
       setDisable(true);
       form.setFieldsValue({
-        firstname: data.firstname,
-        lastname: data.lastname,
+        firstname: data.firstname || "Chưa được nhập",
+        lastname: data.lastname || "Chưa được nhập",
         phone: data.phone || "Chưa được nhập",
       });
     }

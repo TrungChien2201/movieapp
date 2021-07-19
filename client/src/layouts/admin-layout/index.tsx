@@ -15,6 +15,7 @@ import { faBell } from '@fortawesome/free-solid-svg-icons'
 import apis from '../../api';
 import { SUCCESS } from '../../constants';
 import MangerStatistical from '../../pages/admin/statistical';
+import Employee from '../../pages/admin/employee';
 
 
 
@@ -24,11 +25,11 @@ const LayoutAdmin = () => {
     const [loading, setLoading] = useState(true);
     const [data,setData] = useState('');
     const [count, setCount]: any = useState(0);
-    const rule = localStorage.getItem("rule");
+    const rule : any = localStorage.getItem("rule");
     const history = useHistory();
     const ENDPOINT  = "http://localhost:3002";
     React.useEffect(()=> {
-        if(rule !== '2'){
+        if(rule !== '2' && rule !== '3' ){
            window.location.href = "/"
         }
     },[])
@@ -107,6 +108,7 @@ const LayoutAdmin = () => {
                             <Route path="/admin/manager-account" component={MangerAccount} />
                             <Route path="/admin/statistical" component={MangerStatistical} />
                             <Route path="/admin/order-form" component={OrderForm} />
+                            <Route path="/admin/manager-employee" component={Employee} />
                             <Route path="/admin" exact component={Dashboard} />
                     </Switch>
                 </div>

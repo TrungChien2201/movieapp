@@ -11,12 +11,13 @@
         position: fixed;
         top: 0;
         padding: 15px 0px;
-        width: calc(100% - 322px);
+        width: calc(100% - 255px);
         height: 68px;
         align-items: center;
         z-index: 1000;
         padding-right: 40px;
         right: 0;
+        background-color: #fff;
     }
     .layout-content{
         padding-left: 260px;

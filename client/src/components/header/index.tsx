@@ -39,7 +39,7 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    history.push("/");
+    window.location.href = "/login";
   };
 
   const menu = (
@@ -56,7 +56,7 @@ const Header = () => {
   return (
     <>
       <div className="header-top d-flex w-100 justify-content-between">
-        <h5 className="header-title">Hệ thống cửa hàng menshop</h5>
+        <h5 onClick={()=>history.push("/")} className="header-title">Hệ thống cửa hàng menshop</h5>
         <Menu mode="horizontal" className="menu-top">
           <Menu.Item key="order">
             <Link to="/order-form">Kiểm tra đơn hàng</Link>
@@ -66,7 +66,7 @@ const Header = () => {
           </Menu.Item>
 
           <Menu.Item key="profile">
-            {data?.firstname && data?.lastname ? (
+            {(data?.firstname || data?.lastname || data?.username) ? (
               <Dropdown
                 overlay={menu}
                 trigger={["click"]}
@@ -74,7 +74,7 @@ const Header = () => {
                 arrow
               >
                 <div className="fullname-profile">
-                  {data?.firstname} {data?.lastname}{" "}
+                  {data?.firstname} {data?.lastname}
                   <FontAwesomeIcon icon={faSortDown} />
                 </div>
               </Dropdown>

@@ -8,4 +8,5 @@ export interface Irespone  {
     statusText?: string;
     __proto__?: any;
     orderId?: any;
+    ERROR_CODE?: string;
 }

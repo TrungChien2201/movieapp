@@ -1,4 +1,4 @@
-import React, { useState, useRef   } from "react";
+import React, { useState, useRef } from "react";
 import { Image, Pagination } from "antd";
 import "./style.scss";
 import apis from "../../../api";
@@ -7,21 +7,22 @@ import { Carousel } from "react-responsive-carousel";
 import ReactPlayer from "react-player/lazy";
 import { Link } from "react-router-dom";
 import LoadingPage from "../../../components/LoadingPage";
-import MessengerCustomerChat from 'react-messenger-customer-chat';
+import MessengerCustomerChat from "react-messenger-customer-chat";
+import { Irespone } from "../../../constants/interface";
+import { SUCCESS } from "../../../constants";
 const HomePage = () => {
   const [product, setProduct] = useState([]);
+  const [productHightLight, setProductHightLight] = useState([]);
   const [current, setCurrent] = useState(1);
-  const [loading,setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const message: any = useRef();
   const handleChangePage = (page: number) => {
     setCurrent(page);
     setLoading(true);
-    apis
-      .getProductPage(page)
-      .then((resp: any) => {
-        setProduct(resp.data.product);
-        setLoading(false);
-      });
+    apis.getProductPage(page).then((resp: any) => {
+      setProduct(resp.data.product);
+      setLoading(false);
+    });
   };
   const settings = {
     slidesToShow: 1,
@@ -30,14 +31,23 @@ const HomePage = () => {
 
   React.useEffect(() => {
     apis.getProductPage(1).then((resp: any) => {
-      if(resp){
+      if (resp) {
         setProduct(resp.data.product);
         setLoading(false);
       }
-      });
+    });
   }, []);
-  if(loading){
-    return <LoadingPage />
+
+  React.useEffect(() => {
+    apis.getProductHightLight().then(({ data }: { data: Irespone }) => {
+      if (data?.status === SUCCESS) {
+        setProductHightLight(data?.data[0].item);
+      }
+    });
+  }, []);
+
+  if (loading) {
+    return <LoadingPage />;
   }
   return (
     <>
@@ -68,7 +78,46 @@ const HomePage = () => {
               </div>
             </div>
           </div>
-          
+          <div className="home-content">
+            <h2 className="home-content-title">Sản phẩm nổi bật</h2>
+            <div className="row">
+              {Array.isArray(productHightLight) &&
+                productHightLight.length > 0 &&
+                productHightLight?.map((item: any, index: number) => (
+                  <div
+                    className="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-3 product-card"
+                    key={`card_${item._id}`}
+                  >
+                    <div>
+                      <Link to={`/product/${item._id}`}>
+                        <img width="100%" src={item.image} />
+                      </Link>
+                      {item.percent_sale && (
+                        <span className="product-card_percent">
+                          Giảm {item.percent_sale}%
+                        </span>
+                      )}
+                      <p className="product-card_title">{item.title}</p>
+                      <p>
+                        <span className="product-card_price-sale">
+                          {item.price_sale && `${item.price_sale}đ`}
+                        </span>{" "}
+                        <span
+                          className={
+                            item.price_sale
+                              ? "product-card_price"
+                              : "product-card_price-bold"
+                          }
+                        >
+                          {item.price && item.price}đ
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+
           <div className="home-content">
             <h2 className="home-content-title">Sản phẩm của shop</h2>
             <div className="row">
@@ -80,7 +129,9 @@ const HomePage = () => {
                     key={`card_${item._id}`}
                   >
                     <div>
-                      <Link to={`/product/${item._id}`}><img width="100%" src={item.image} /></Link>
+                      <Link to={`/product/${item._id}`}>
+                        <img width="100%" src={item.image} />
+                      </Link>
                       {item.percent_sale && (
                         <span className="product-card_percent">
                           Giảm {item.percent_sale}%
@@ -123,8 +174,7 @@ const HomePage = () => {
               showArrows={false}
               emulateTouch={true}
               infiniteLoop={true}
-              onChange={(e) => {
-              }}
+              onChange={(e) => {}}
             >
               <div className="slide-item">
                 <div>
@@ -189,11 +239,15 @@ const HomePage = () => {
               <p className="text-description">Khách Hàng Đã Mua</p>
             </div>
             <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 pr-0">
-              <ReactPlayer width="100%" height="400px" url="https://www.youtube.com/watch?v=V82P_JP7Drc" />
+              <ReactPlayer
+                width="100%"
+                height="400px"
+                url="https://www.youtube.com/watch?v=V82P_JP7Drc"
+              />
             </div>
           </div>
         </div>
-        </div>
+      </div>
     </>
   );
 };

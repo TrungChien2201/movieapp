@@ -37,12 +37,21 @@ export const changePassword = payload => axios.put('/api/change-password', paylo
 // admin
 
 export const getAccount = () => axios.get(`/api/get-account`);
+export const createAccount = payload => axios.post(`/api/create-account`, payload);
 export const getAllOrder = () => axios.get(`/api/get-all-order`);
 export const deleteAccount = id => axios.delete(`/api/delete-account/${id}`);
 export const editAccount = payload => axios.put(`/api/edit-account`, payload);
 export const deleteOrder = id => axios.delete(`/api/delete-order/${id}`);
 export const editOrder = payload => axios.put(`/api/edit-order`, payload);
 export const getNotify = () => axios.get(`/api/notify`);
+export const getEmployee = () => axios.get(`/api/get-employee`);
+export const createEmployee = payload => axios.post(`/api/add-employee`,payload);
+export const updateEmployee = payload => axios.put(`/api/update-employee`,payload);
+export const deleteEmployee = id => axios.delete(`/api/delete-employee/${id}`);
+export const searchEmployee = keySearch => axios.get(`/api/search-employee/${keySearch}`);
+export const getProductHightLight = () => axios.get(`/api/get-product-hightlight`);
+export const createProductHightLight = payload => axios.post(`/api/create-product-hightlight` , payload);
+export const updateProductHightLight = payload => axios.put(`/api/update-product-hightlight`, payload);
 
 
 const apis = {
@@ -79,12 +88,21 @@ const apis = {
     changePassword,
     // admin
     getAccount,
+    createAccount,
     deleteAccount,
     editAccount,
     getAllOrder,
     deleteOrder,
     editOrder,
-    getNotify
+    getNotify,
+    getEmployee,
+    createEmployee,
+    updateEmployee,
+    deleteEmployee,
+    searchEmployee,
+    getProductHightLight,
+    createProductHightLight,
+    updateProductHightLight
 
 }
 
