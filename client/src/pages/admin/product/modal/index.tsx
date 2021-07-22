@@ -37,28 +37,43 @@ const ModalCreateProduct = (props: Props) => {
     listUrl,
     setListUrl,
     shoeType,
-    setShoeType
+    setShoeType,
   } = props;
+  const [colorSelect, setColorSelect] = useState<{}[]>([]);
+  const [numberProduct, setNumberProduct] = useState<any>({});
   const CreateProduct = (e: any) => {
     if (edit) {
       if (e.price_sale) {
         handleEdit({
           id: dataEdit._id,
           e,
+          number_product: numberProduct,
           percent_sale: Math.ceil((1 - e.price_sale / e.price) * 100),
         });
-      } else handleEdit({ id: dataEdit._id, e, percent_sale: null });
+      } else
+        handleEdit({
+          id: dataEdit._id,
+          e,
+          percent_sale: null,
+          number_product: numberProduct,
+        });
       setEdit(false);
     } else if (!edit) {
-      handleSubmit(e);
+      handleSubmit({ ...e, number_product: numberProduct });
     }
   };
   const onChangeProduct = (e: any) => {
-     setShoeType(e.target.value)
-  }
+    setShoeType(e.target.value);
+  };
   const handleCheck = (e: any) => {};
 
-  const handleChangeColor = (e: any) => {};
+  const handleChangeColor = (e: any) => {
+    setColorSelect(e);
+  };
+
+  const handleChangeNumber = (key: string) => (value: any) => {
+    setNumberProduct({ ...numberProduct, [key]: Number(value.target.value) });
+  };
 
   const handleChangeSize = (e: any) => {};
   React.useEffect(() => {
@@ -69,12 +84,14 @@ const ModalCreateProduct = (props: Props) => {
       form.setFieldsValue(dataEdit);
       setUrl(dataEdit.image);
       setListUrl(dataEdit.list_image);
-      setShoeType(dataEdit.shoe_type)
+      setShoeType(dataEdit.shoe_type);
+      setColorSelect(dataEdit.color);
+      setNumberProduct(dataEdit.number_product);
     }
   }, [url, form, edit, listUrl]);
   return (
     <Modal
-      width="40%"
+      width="60%"
       footer={null}
       visible={visible}
       onCancel={() => {
@@ -178,6 +195,17 @@ const ModalCreateProduct = (props: Props) => {
               <div className="demo-option-label-item">Nâu</div>
             </Option>
           </Select>
+        </Form.Item>
+        <Form.Item label="Số lượng">
+          {colorSelect?.map((item: any, index: number) => (
+            <Form.Item label={item}>
+              <Input
+                value={numberProduct && numberProduct[item]}
+                type="number"
+                onChange={handleChangeNumber(item)}
+              />
+            </Form.Item>
+          ))}
         </Form.Item>
         <Form.Item name="size" label="Size giày">
           <Select

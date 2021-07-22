@@ -16,7 +16,7 @@ CreateLogin = (req, res) => {
     });
   }
 
-  Login.findOne({ username: req.body.username }, (err, login) => {
+  Login.findOne({ username: req.body.username , password: body.password}, (err, login) => {
     if (err) {
       return res
         .status(201)

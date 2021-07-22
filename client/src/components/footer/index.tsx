@@ -1,13 +1,13 @@
 import React from "react";
 import Iframe from "react-iframe";
-import './style.scss';
+import "./style.scss";
 const Footer = () => {
   return (
     <div className="footer">
       <div className="container px-0">
         <div className="row">
           <div className="col-12 col-sm-12 col-md-8 col-lg-4 col-xl-4 pl-0 footer-infor_shop">
-            <img src="/images/logo.png" />
+            <img className="logo" src="/images/logo.png" />
             <div className="d-flex mt-4">
               <p className="footer-infor_shop-label">Hotline:</p>
               <p className="footer-infor_shop-content">035.397.1100</p>
@@ -18,7 +18,9 @@ const Footer = () => {
             </div>
             <div className="d-flex">
               <p className="footer-infor_shop-label">Store2:</p>
-              <p className="footer-infor_shop-content">xx Hai Bà Trưng , Hà Nội , Viet Nam</p>
+              <p className="footer-infor_shop-content">
+                xx Hai Bà Trưng , Hà Nội , Viet Nam
+              </p>
             </div>
           </div>
           <div className="col-12 col-sm-12 col-md-4 col-lg-2 col-xl-2 footer-service">
@@ -43,7 +45,7 @@ const Footer = () => {
             <h5 className="footer-iframe_title">MENSHOP trên facebook</h5>
             <Iframe
               url="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FMenshop-105721911609064&tabs=timeline&width=371&height=127&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
-              width= "100%"
+              width="100%"
               height="100%"
               position="relative"
               className="iframe-facebook"

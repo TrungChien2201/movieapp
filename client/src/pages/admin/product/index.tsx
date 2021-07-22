@@ -41,8 +41,10 @@ const ManageProduct = () => {
   const [shoeType, setShoeType] = useState("");
   const handleSubmit = (e: any) => {
     setVisible(false);
+    console.log(e);
     apis.createProduct(e).then((resp: any) => {
       if (resp?.data.status === SUCCESS) {
+        notification.success({ message: "Create product success" });
         if (e.price_sale) {
           setProduct([
             ...product,
@@ -150,7 +152,7 @@ const ManageProduct = () => {
       key: 8,
       title: "",
       render: (text: string, record: any, index: number) => (
-        <div>
+        <div style={{ display: "flex" }}>
           <Popconfirm
             onConfirm={() => DeleteProduct(record?._id)}
             placement="leftTop"
@@ -187,25 +189,36 @@ const ManageProduct = () => {
     setEdit(true);
     setVisible(true);
     setDataEdit(e);
+    console.log(e);
   };
 
   const handleEdit = (e: any) => {
     setVisible(false);
     setEdit(false);
-    apis.updateProduct({ id: e.id, data: e?.e }).then((resp: any) => {
-      if (resp?.data.status === SUCCESS) {
-        notification.success({ message: "Edit success" });
-        const dataNew = product.map((el: any) => {
-          if (el?._id === e.id) {
-            const elNew = e?.e;
-
-            return { ...elNew, _id: el._id, percent_sale: e.percent_sale };
-          }
-          return el;
-        });
-        setProduct(dataNew);
-      }
-    });
+    apis
+      .updateProduct({
+        id: e.id,
+        data: { ...e?.e, number_product: e.number_product },
+      })
+      .then((resp: any) => {
+        if (resp?.data.status === SUCCESS) {
+          notification.success({ message: "Edit success" });
+          const dataNew = product.map((el: any) => {
+            if (el?._id === e.id) {
+              const elNew = e?.e;
+              console.log(e);
+              return {
+                ...elNew,
+                _id: el._id,
+                percent_sale: e.percent_sale,
+                number_product: e.number_product,
+              };
+            }
+            return el;
+          });
+          setProduct(dataNew);
+        }
+      });
     form.resetFields();
     setUrl("");
     setListUrl("");
@@ -215,11 +228,20 @@ const ManageProduct = () => {
     if (!editProductHightLight && productHightlight.length > 0) {
       apis
         .createProductHightLight({ item: productHightlight })
-        .then((res) => console.log(res));
+        .then((res) =>
+          notification.success({ message: "Tạo sản phẩm nổi bật thành công" })
+        )
+        .catch((err) =>
+          notification.error({ message: "Lỗi", description: err.message })
+        );
     } else if (editProductHightLight && productHightlight.length > 0) {
       apis
         .updateProductHightLight({ item: productHightlight, _id: recordId })
-        .then((res) => console.log(res));
+        .then((res) =>
+          notification.success({
+            message: "Cập nhật sản phẩm nổi bật thành công",
+          })
+        );
     }
   }, [productHightlight, editProductHightLight]);
 
@@ -275,7 +297,7 @@ const ManageProduct = () => {
               : "Cập nhật sản phẩm nổi bật"}
           </ButtonCustom>
           <ButtonCustom mode="blue" onClick={() => setVisible(true)}>
-            + Create Product
+            + Thêm sản phẩm
           </ButtonCustom>
         </div>
 

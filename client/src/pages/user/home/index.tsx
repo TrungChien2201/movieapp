@@ -41,7 +41,7 @@ const HomePage = () => {
   React.useEffect(() => {
     apis.getProductHightLight().then(({ data }: { data: Irespone }) => {
       if (data?.status === SUCCESS) {
-        setProductHightLight(data?.data[0].item);
+        setProductHightLight(data?.data[0]?.item);
       }
     });
   }, []);
@@ -132,11 +132,11 @@ const HomePage = () => {
                       <Link to={`/product/${item._id}`}>
                         <img width="100%" src={item.image} />
                       </Link>
-                      {item.percent_sale && (
+                      {item.percent_sale ? (
                         <span className="product-card_percent">
                           Giảm {item.percent_sale}%
                         </span>
-                      )}
+                      ) : null}
                       <p className="product-card_title">{item.title}</p>
                       <p>
                         <span className="product-card_price-sale">

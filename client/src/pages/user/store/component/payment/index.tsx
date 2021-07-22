@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Modal, Radio, Select, Spin } from "antd";
+import {
+  Button,
+  Form,
+  Input,
+  Modal,
+  notification,
+  Radio,
+  Select,
+  Spin,
+} from "antd";
 import { useHistory } from "react-router";
 import "./style.scss";
 import apis from "../../../../../api";
@@ -19,8 +28,8 @@ const Payment = (props: any) => {
   const [commune, setCommune] = useState([]);
   const [visible, setVisible] = useState(false);
   const [payment, setPayment] = useState(1);
-  const [orderid,setOrderid] = useState(null);
-  const [price,setPrice]: any = React.useState(null);
+  const [orderid, setOrderid] = useState(null);
+  const [price, setPrice]: any = React.useState(null);
   const [address, setAddress] = useState({
     city: "",
     district: "",
@@ -32,23 +41,25 @@ const Payment = (props: any) => {
   const handleKeySale = () => {};
 
   const handleSubmit = (e: any) => {
-    
-     setLoading(true)
-      apis.CreateOrder({idUser: idUser,infor: e, product: prop}).then(({data}: {data: Irespone})=> {
-         if(data){
-            setLoading(false);
-
-         }
-        if(data.status === SUCCESS){
-          setOrderid(data.orderId)
-           apis.deleteStore(idUser).then(({data}: {data: Irespone})=>{
-              if(data.status === SUCCESS){
-                 setProp([]);
-                 setVisible(true);
-              }
-           })
+    setLoading(true);
+    apis
+      .CreateOrder({ idUser: idUser, infor: e, product: prop })
+      .then(({ data }: { data: Irespone }) => {
+        if (data) {
+          setLoading(false);
         }
-      })
+        if (data.status === SUCCESS) {
+          setOrderid(data.orderId);
+          apis.deleteStore(idUser).then(({ data }: { data: Irespone }) => {
+            if (data.status === SUCCESS) {
+              setProp([]);
+              setVisible(true);
+              // history.push("/follow-order-detail");
+              // notification.success({ message: "Đặt hàng thành công" });
+            }
+          });
+        }
+      });
   };
   React.useEffect(() => {
     apis.getCity().then(({ data }: { data: Irespone }) => {
@@ -62,7 +73,7 @@ const Payment = (props: any) => {
       setProp(history?.location?.state);
       const price$ = (history?.location?.state?.sum_price + 30000) / 23000;
       const price = Math.round(price$ * 100) / 100;
-      setPrice(price)
+      setPrice(price);
     } else history.push("/store");
   }, []);
   const handleChangeCity = (e: string) => {
@@ -73,12 +84,12 @@ const Payment = (props: any) => {
     });
   };
   const handleOrder = () => {
-     if(payment === 3){
-       Axios.put('/api/payment', {statusOrder: 3, orderId: orderid})
-     }
-     setVisible(false);
-     history.push('/order-form');
-  }
+    if (payment === 3) {
+      Axios.put("/api/payment", { statusOrder: 3, orderId: orderid });
+    }
+    setVisible(false);
+    history.push("/order-form");
+  };
   const handleChangePayment = (e: any) => {
     setPayment(e.target.value);
   };
@@ -187,7 +198,7 @@ const Payment = (props: any) => {
               {Array.isArray(prop?.store) &&
                 prop.store.map((el: any) => (
                   <div
-                    key={`${el._id}_iis`}
+                    key={`${el._id}`}
                     className="d-flex py-2 card-store justify-content-between"
                   >
                     <div className="d-flex card-store_infor">
@@ -224,15 +235,24 @@ const Payment = (props: any) => {
                 </div>
               </div>
             </div>
-            
+
             {/* <div className="py-3 order-form_text">Bạn đặt hàng và thanh toán sau khi nhân viên bưu điện đưa hàng đến nơi và thu tiền tận nhà bạn</div> */}
             <Button htmlType="submit" className="order-form_submit">
               {loading && <Spin />} Đặt hàng
             </Button>
-            {visible &&  <ModalPayment visible={visible} setVisible={setVisible} payment={payment} setPayment={setPayment} handleOrder={handleOrder} price={price} orderid={orderid}/>}
+            {visible && (
+              <ModalPayment
+                visible={true}
+                setVisible={setVisible}
+                payment={payment}
+                setPayment={setPayment}
+                handleOrder={handleOrder}
+                price={price}
+                orderid={orderid}
+              />
+            )}
           </div>
         </div>
-        
       </Form>
     </div>
   );

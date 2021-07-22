@@ -16,6 +16,9 @@ import FormatMoney from "../format-money";
 import LoadingPage from "../LoadingPage";
 import "./style.scss";
 import { useHistory } from "react-router-dom";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ButtonCustom from "../Button";
 const { Option } = Select;
 
 interface PropsDrawer {
@@ -27,29 +30,30 @@ const DrawerFormFilter = (props: PropsDrawer) => {
   const { visible, setVisible } = props;
   const [data, setData] = useState<
     {
-      color: any,
-      createdAt: string,
-      description: string,
-      image: string,
-      percent_sale: number,
-      size: any,
-      title: string,
-      updatedAt: string,
-      _id: string,
-      price: number,
-      price_sale: number
+      color: any;
+      createdAt: string;
+      description: string;
+      image: string;
+      percent_sale: number;
+      size: any;
+      title: string;
+      updatedAt: string;
+      _id: string;
+      price: number;
+      price_sale: number;
     }[]
   >([]);
 
   const [loading, setLoading] = useState(false);
+  const [isFilter, setIsFilter] = useState(false);
 
   const onClose = () => {
     setVisible(false);
   };
 
   const handleGotoDetail = (id: string) => {
-      history.push(`/product/${id}`);
-      onClose();
+    history.push(`/product/${id}`);
+    onClose();
   };
   const handleSearch = (e: any) => {
     let keySearch: string | null = null;
@@ -74,6 +78,16 @@ const DrawerFormFilter = (props: PropsDrawer) => {
     }
   };
 
+  const handleChangePriceFilter = (value: number | string) => {
+    setLoading(true);
+    apis.FilterProductWithPrice(value).then(({ data }: { data: Irespone }) => {
+      if (data?.data) {
+        setData(data?.data);
+      } else setData([]);
+      setLoading(false);
+    });
+  };
+
   const loadingMarkup = loading ? <LoadingPage /> : null;
   return (
     <Drawer
@@ -96,12 +110,48 @@ const DrawerFormFilter = (props: PropsDrawer) => {
     >
       {loadingMarkup}
       <Row gutter={16}>
-        <Col span={24}>
+        <Col span={isFilter ? 16 : 20}>
           <Input
             onChange={handleSearch}
             placeholder="Nhập tên sản phẩm muốn tìm kiếm"
           />
         </Col>
+        <Col span={4}>
+          <ButtonCustom
+            onClick={() => setIsFilter(true)}
+            icon={<FontAwesomeIcon icon={faFilter} />}
+          >
+            Lọc theo giá sản phẩm
+          </ButtonCustom>
+        </Col>
+        {isFilter && (
+          <Col span={4}>
+            <Select
+              style={{ width: "100%" }}
+              onChange={handleChangePriceFilter}
+              defaultValue=""
+            >
+              <Option value={1}>
+                {"<"} <FormatMoney money={300000} />
+              </Option>
+              <Option value={2}>
+                <div>
+                  <FormatMoney money={300000} /> đến{" "}
+                  <FormatMoney money={500000} />
+                </div>
+              </Option>
+              <Option value={3}>
+                <div>
+                  <FormatMoney money={500000} /> đến{" "}
+                  <FormatMoney money={1000000} />
+                </div>
+              </Option>
+              <Option value={4}>
+                {">"} <FormatMoney money={1000000} />
+              </Option>
+            </Select>
+          </Col>
+        )}
       </Row>
       <Row gutter={16}>
         {data.length > 0 && Array.isArray(data) ? (
@@ -131,7 +181,7 @@ const DrawerFormFilter = (props: PropsDrawer) => {
             </Col>
           ))
         ) : (
-          <div>Không có sản phẩm được tìm kiếm</div>
+          <div className="not-result">Không có sản phẩm được tìm kiếm</div>
         )}
       </Row>
     </Drawer>

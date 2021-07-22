@@ -18,6 +18,9 @@ export const getProduct = () => axios.get(`/api/get-product`)
 export const getProductDetail = id => axios.get(`/api/product-detail/${id}`)
 export const deleteProduct = payload => axios.delete(`/api/delete-product/${payload.id}`)
 export const updateProduct = payload => axios.put(`/api/edit-product/${payload.id}`, payload.data)
+export const apartFromNumberProduct = payload => axios.put(`/api/apart-from-product`, payload)
+export const addNumberProduct = payload => axios.put(`/api/add-number-product`, payload);
+
 export const searchProduct = payload => axios.get(`/api/search-product/${payload}`)
 export const getProductPage = page => axios.get(`/api/product/${page}`)
 export const CreateStore = payload => axios.post(`/api/create-store/${payload.id}`, payload.store)
@@ -31,6 +34,7 @@ export const CreateOrder = payload => axios.post(`/api/create-order`, payload);
 export const getOrder = id => axios.get(`/api/get-order/${id}`);
 export const SearchOrder = keySearch => axios.get(`/api/search-order/${keySearch}`);
 export const FilterProduct = type => axios.get(`/api/filter-product/${type}`);
+export const FilterProductWithPrice = type => axios.get(`/api/filter-product-price/${type}`);
 export const getProfile = id => axios.get(`/api/get-profile/${id}`);
 export const updateProfile = payload => axios.put('/api/update-profile', payload);
 export const changePassword = payload => axios.put('/api/change-password', payload);
@@ -52,6 +56,9 @@ export const searchEmployee = keySearch => axios.get(`/api/search-employee/${key
 export const getProductHightLight = () => axios.get(`/api/get-product-hightlight`);
 export const createProductHightLight = payload => axios.post(`/api/create-product-hightlight` , payload);
 export const updateProductHightLight = payload => axios.put(`/api/update-product-hightlight`, payload);
+export const getOrderByMonth = () => axios.get(`/api/get-order-month`);
+export const getOrderByWeekNow = (payload) => axios.post(`/api/get-order-weekNow`, payload);
+export const getOrderYear = (payload) => axios.post(`/api/get-order-year`, payload);
 
 
 const apis = {
@@ -67,6 +74,8 @@ const apis = {
     forgotPassword,
     createProduct,
     getProduct,
+    apartFromNumberProduct,
+    addNumberProduct,
     getProductDetail,
     deleteProduct,
     updateProduct,
@@ -83,6 +92,7 @@ const apis = {
     getOrder,
     SearchOrder,
     FilterProduct,
+    FilterProductWithPrice,
     getProfile,
     updateProfile,
     changePassword,
@@ -102,7 +112,10 @@ const apis = {
     searchEmployee,
     getProductHightLight,
     createProductHightLight,
-    updateProductHightLight
+    updateProductHightLight,
+    getOrderByMonth,
+    getOrderByWeekNow,
+    getOrderYear
 
 }
 

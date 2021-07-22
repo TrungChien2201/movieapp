@@ -56,17 +56,15 @@ const StoreProduct = () => {
   };
 
   const deleteAllProduct = () => {
-      apis.deleteStore(userId)
-      .then(({ data }: { data: Irespone }) => {
-        if (data.status === SUCCESS) {
-          setStore([]);
-          notification.success({
-            message: "Xóa sản phẩm thành công",
-          });
-        }
-      });
-  }
-
+    apis.deleteStore(userId).then(({ data }: { data: Irespone }) => {
+      if (data.status === SUCCESS) {
+        setStore([]);
+        notification.success({
+          message: "Xóa sản phẩm thành công",
+        });
+      }
+    });
+  };
 
   if (loading) {
     return <LoadingPage />;
@@ -102,16 +100,18 @@ const StoreProduct = () => {
                 <th>Size</th>
                 <th>Số lượng</th>
                 <th>Tổng</th>
-                <th><Popconfirm
-                        title="Bạn có chắc chắc muốn xóa tất cả sản phẩm"
-                        onConfirm={deleteAllProduct}
-                        okText="Đồng ý"
-                        cancelText="Hủy"
-                      >
-                        <Button style={{ border: "none", color: "#c51212" }}>
-                          <FontAwesomeIcon icon={faTrash} />
-                        </Button>
-                      </Popconfirm></th>
+                <th>
+                  <Popconfirm
+                    title="Bạn có chắc chắc muốn xóa tất cả sản phẩm"
+                    onConfirm={deleteAllProduct}
+                    okText="Đồng ý"
+                    cancelText="Hủy"
+                  >
+                    <Button style={{ border: "none", color: "#c51212" }}>
+                      <FontAwesomeIcon icon={faTrash} />
+                    </Button>
+                  </Popconfirm>
+                </th>
               </tr>
             </thead>
 

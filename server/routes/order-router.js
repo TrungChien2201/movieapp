@@ -8,5 +8,9 @@ router.get('/search-order/:search', OrderCtrl.searchOrder)
 
 router.delete('/delete-order/:id', OrderCtrl.deleteOrder)
 router.put('/edit-order', OrderCtrl.editOrder)
+router.get('/get-order-month', OrderCtrl.findOrderByMonth)
+router.post('/get-order-weekNow', OrderCtrl.getOrderWeekNow)
+router.post('/get-order-year', OrderCtrl.getOrderYear)
+
 
 module.exports = router

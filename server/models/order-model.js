@@ -18,6 +18,12 @@ const Order = new Schema({
   },
   status: {type: Number},
   status_Order: {type: Number},
+  create : {
+    date: {type: Number},
+    month: {type: Number},
+    year: {type: Number},
+    week: {type: Number}
+  }
 },
 {timestamps: true}
 

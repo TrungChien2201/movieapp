@@ -11,7 +11,8 @@ const Product = new Schema({
     list_image: {},
     shoe_type: {type: Number, require: true},
     color: {type: Array, required: true},
-    size: {type: Array, required: true}
+    size: {type: Array, required: true},
+    number_product: {}
 },
 { timestamps: true },
 )

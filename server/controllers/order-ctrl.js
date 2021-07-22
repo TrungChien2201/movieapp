@@ -1,11 +1,21 @@
 const Order = require('../models/order-model');
 const StoreNotify = require('../models/notify-model');
 CreateOrder = (req,res) => {
-    const body = req.body
+    const body = req.body;
+    const date = new Date();
     if(!body){
         return res.status(400).json({status: 'ERROR', message: 'body request null'})
     }
-    const order = new Order({...body, status: 0, status_Order: 1})
+
+     function getWeekfunction() {
+      var onejan = new Date(date.getFullYear(),0,1);
+      var today = new Date(date.getFullYear(),date.getMonth(),date.getDate());
+      var dayOfYear = ((today - onejan + 86400000)/86400000);
+      return Math.ceil(dayOfYear/7)
+    };
+
+    console.log(getWeekfunction())
+    const order = new Order({...body, status: 0, status_Order: 1,create: {date: date.getDate(), month: date.getMonth() + 1, year: date.getFullYear(), week: getWeekfunction() + 1} })
     if(!order){
         return res.status(400).json({status: 'ERROR', message: 'Not Create Order - Form'})
     }
@@ -59,6 +69,66 @@ deleteOrder = async(req, res) => {
   })
 }
 
+findOrderByMonth = async(req,res) => {
+  await Order.find({"create.month" : {
+    $gte: 6,
+    // $lt: 8
+  }}, (err, result) => {
+    if(err){
+      return res.status(400).json({status: 'ERROR', message : err});
+    }
+
+    if(!result || result.length < 1){
+      return res.status(200).json({status: 'SUCCESS', message: 'Not found', data: []})
+    }
+    return res.status(200).json({status: 'SUCCESS', message: 'Success', data: result});
+  })
+}
+
+getOrderWeekNow = async (req,res) => {
+  const body = req.body;
+  await Order.find({"create.date": {
+    $gte: body.dateStart,
+    $lt: body.dateEnd
+  },"create.month": body.month,"create.year": body.year }, (err, result) => {
+    if(err){
+      return res.status(400).json({status: 'ERROR', message: err});
+    } 
+    if(!result || result.length < 1){
+      return res.status(200).json({status: 'SUCCESS', message: 'Not found', data: []})
+    }
+    const newObject = [];        
+    for(var i = 0; i < 7;i ++){
+      const data = result.filter(item => item.create.date === body.dateStart + i);
+      let count = 0;
+      data.map(item => count = count + item.product.sum_price);
+      newObject.push({sum: count, total: data.length});
+    }
+    return res.status(200).json({status: 'SUCCESS', message: 'Success', data: {total: result.length, data: newObject}});
+
+  })
+}
+getOrderYear = async (req,res) => {
+  const body = req.body;
+  await Order.find({"create.year": body.year }, (err, result) => {
+    if(err){
+      return res.status(400).json({status: 'ERROR', message: err});
+    } 
+    if(!result || result.length < 1){
+      return res.status(200).json({status: 'SUCCESS', message: 'Not found', data: []})
+    }
+    const newObject = [];        
+    for(var i = 1; i < 13;i ++){
+      const data = result.filter(item => item.create.month === i);
+      let count = 0;
+      data.map(item => count = count + item.product.sum_price);
+      newObject.push({sum: count, total: data.length});
+    }
+    return res.status(200).json({status: 'SUCCESS', message: 'Success', data: {total: result.length, data: newObject}});
+
+  })
+}
+
 editOrder = async(req,res) => {
   const body = req.body;
   if(!body){
@@ -75,6 +145,8 @@ editOrder = async(req,res) => {
   })
    
 }
+
+
 
 searchOrder = async(req,res) => {
   const result = [];
@@ -113,4 +185,4 @@ searchOrder = async(req,res) => {
     }
   })
 }
-module.exports = {CreateOrder, getOrderUser, getAllOrder, deleteOrder, editOrder, searchOrder}
+module.exports = {getOrderYear,findOrderByMonth,CreateOrder, getOrderUser, getAllOrder, deleteOrder, editOrder, searchOrder, getOrderWeekNow}

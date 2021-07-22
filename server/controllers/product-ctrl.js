@@ -94,7 +94,7 @@ GetProductPage = (req, res) => {
 
 EditProduct = (req, res) => {
   const id = req.params.id;
-
+  console.log(req.body)
   Product.findOne({ _id: id }, (err, product) => {
     if (err) {
       return res.status(400).json({ status: "ERROR", message: err });
@@ -112,6 +112,7 @@ EditProduct = (req, res) => {
     product.title = req.body.title;
     product.price = req.body.price;
     product.price_sale = req.body.price_sale;
+    product.number_product = req.body.number_product;
     product.percent_sale = Math.ceil(
       (1 - req.body.price_sale / req.body.price) * 100
     );
@@ -208,6 +209,59 @@ FilterProduct = (req,res) => {
   })
 }
 
+FilterProductWithPrice = async(req, res) => {
+  const typePrice = req.params.type;
+  await Product.find({} , (err, result) => {
+    if(!result || result.length < 1) {
+      return res.status(200).json({status: 'ERROR', message: 'Result not found', data: []})
+    }
+    let resultFilter = [];
+    if(Number(typePrice) === 1){
+      
+      resultFilter = result.filter(item => item.price_sale < 300000)
+    }
+    if(Number(typePrice) === 2){
+      resultFilter = result.filter(item => item.price_sale > 299999 && item.price_sale < 500000)
+    }
+    if(Number(typePrice) === 3){
+      resultFilter = result.filter(item => item.price_sale > 499999 && item.price_sale < 1000001)
+    }
+    if(Number(typePrice) === 4){
+      resultFilter = result.filter(item => item.price_sale > 1000000)
+    }
+    return res.status(200).json({status: 'SUCCESS', message: 'Success', data: resultFilter});
+  })
+}
+
+ ApartFromNumberProduct = (req,res) => {
+  const body = req.body;
+  if(!body){
+    return res.status(400).json({status: 'ERROR', message: 'Body is not null'});
+  }
+   Product.findOne({_id: body.productId}, (err, result) => {
+    if(err){ 
+      return res.status(400).json({status: 'ERROR', message: err})
+    }
+    if(!result || result?.length){
+      return res.status(200).json({status: 'ERROR', message: 'Not product with Id request'});
+    }
+    result.number_product[body.color] = Number(result.number_product[body.color]) - Number(body.number);
+    result
+     .save()
+      .then(() => {
+        return res.status(200).json({status: 'SUCCESS', message: 'success', data: result});
+      })
+      .catch((err) => {
+        return res.status(400).json({status: 'ERROR', message: err});
+      })
+  })
+}
+
+ AddNumberProduct = (req,res) => {
+  
+}
+
+
 module.exports = {
   CreateProduct,
   GetProduct,
@@ -216,5 +270,8 @@ module.exports = {
   SearchProduct,
   GetProductPage,
   GetProductDetail,
-  FilterProduct
+  FilterProduct,
+  FilterProductWithPrice,
+  ApartFromNumberProduct,
+  AddNumberProduct
 };

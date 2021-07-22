@@ -56,7 +56,9 @@ const Header = () => {
   return (
     <>
       <div className="header-top d-flex w-100 justify-content-between">
-        <h5 onClick={()=>history.push("/")} className="header-title">Hệ thống cửa hàng menshop</h5>
+        <h5 onClick={() => history.push("/")} className="header-title">
+          Hệ thống cửa hàng menshop
+        </h5>
         <Menu mode="horizontal" className="menu-top">
           <Menu.Item key="order">
             <Link to="/order-form">Kiểm tra đơn hàng</Link>
@@ -66,7 +68,7 @@ const Header = () => {
           </Menu.Item>
 
           <Menu.Item key="profile">
-            {(data?.firstname || data?.lastname || data?.username) ? (
+            {data?.firstname || data?.lastname || data?.username ? (
               <Dropdown
                 overlay={menu}
                 trigger={["click"]}
@@ -90,7 +92,10 @@ const Header = () => {
         </Menu>
       </div>
       <div className="d-flex w-100 justify-content-between header-bottom">
-        <Image src={`/images/logo.png`} />
+        <Image
+          style={{ width: "130px", objectFit: "cover" }}
+          src={`/images/logo.png`}
+        />
         <Menu mode="horizontal" className="menu">
           <Menu.Item key="1">
             <Link to="/product-filter?loai-giay=1">Giày Nike</Link>
