@@ -104,18 +104,20 @@ const ProductDetail = () => {
   };
   console.log("product", product);
   const userId = localStorage.getItem("id");
+  const id = Math.random().toString(36).substr(2, 9);
   const handleSubmit = () => {
     apis
       .CreateStore({
         id: userId,
         store: {
-          _id: params.id,
+          _id: id,
           nameproduct: product.title,
           price_sale: product.price_sale,
           color: color[0].key,
           size: size[0].key,
           image: product.image,
           total: number,
+          productId: params.id,
         },
       })
       .then((resp: any) => {
@@ -124,10 +126,14 @@ const ProductDetail = () => {
           history.replace("/store");
         }
       });
+    const numbers = product.number_product;
+    const key = color[0].key;
     apis.apartFromNumberProduct({
       productId: params.id,
-      color: color[0].key,
-      number: number,
+      number_product: {
+        ...numbers,
+        [key]: Number(numbers[key]) - Number(number),
+      },
     });
   };
 

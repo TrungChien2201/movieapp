@@ -245,7 +245,7 @@ FilterProductWithPrice = async(req, res) => {
     if(!result || result?.length){
       return res.status(200).json({status: 'ERROR', message: 'Not product with Id request'});
     }
-    result.number_product[body.color] = Number(result.number_product[body.color]) - Number(body.number);
+    result.number_product = body.number_product;
     result
      .save()
       .then(() => {
@@ -258,7 +258,34 @@ FilterProductWithPrice = async(req, res) => {
 }
 
  AddNumberProduct = (req,res) => {
-  
+  const body = req.body;
+  if(!body){
+    return res.status(400).json({status: 'ERROR', message: 'Body request not found'});
+  }
+
+  Product.findOne({_id: body.productId}, (err, result) => {
+    if(err){
+      return res.status(400).json({status: 'ERROR', message: err});
+    }
+    if(!result || result.length < 1) {
+      return res.status(200).json({status: 'SUCCESS', message: 'Not product with productId', data: ''});
+    }
+    console.log(result)
+    const newResult = JSON.stringify(result.number_product);
+    const newResults = JSON.parse(newResult);
+    const key = body.color;
+     const updateNumber = {...newResults, [key]: Number(newResults[key]) + Number(body.total)}
+    result.number_product = updateNumber;
+    console.log(updateNumber)
+    result
+      .save()
+      .then(()=>{
+        return res.status(200).json({status: 'SUCCESS', message: 'Success'});
+      })
+      .catch((err) => {
+        return res.status(400).json({status: 'ERROR', message: err});
+      })
+  })
 }
 
 

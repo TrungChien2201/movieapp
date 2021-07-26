@@ -10,7 +10,8 @@ const Store = new Schema({
         image: {type: String, required: true},
         color: {type: String, required: true},
         size: {type: Number, required: true},
-        total: {type: Number, required: true}
+        total: {type: Number, required: true},
+        productId: {}
     }],
 })
 

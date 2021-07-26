@@ -131,8 +131,11 @@ const MangerStatistical = () => {
   }
 
   let countWeekOption = [];
+  let countTotalWeekOption = 0;
   for (var i = 0; i < 7; i++) {
     if (countOrderWeekOption?.data?.length > 0) {
+      countTotalWeekOption =
+        countTotalWeekOption + countOrderWeekOption?.data[i].sum;
       countWeekOption.push(countOrderWeekOption?.data[i].sum);
     }
   }
@@ -310,7 +313,7 @@ const MangerStatistical = () => {
               <small>
                 Doanh số{" "}
                 <strong>
-                  <FormatMoney money={countTotal} />
+                  <FormatMoney money={countTotalWeekOption} />
                 </strong>
               </small>
             </>

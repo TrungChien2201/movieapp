@@ -37,43 +37,43 @@ const LayoutAdmin = () => {
     }
   }, []);
 
-  const socket = socketIOClient(ENDPOINT, {
-    reconnectionDelay: 100,
-    reconnection: true,
-    reconnectionAttempts: 5000,
-    transports: ["websocket", "polling", "flashsocket"],
-    agent: false, // [2] Please don't set this to true
-    upgrade: false,
-    rejectUnauthorized: false,
-  });
+  // const socket = socketIOClient(ENDPOINT, {
+  //   reconnectionDelay: 100,
+  //   reconnection: true,
+  //   reconnectionAttempts: 5000,
+  //   transports: ["websocket", "polling", "flashsocket"],
+  //   agent: false, // [2] Please don't set this to true
+  //   upgrade: false,
+  //   rejectUnauthorized: false,
+  // });
   React.useEffect(() => {
     apis.getNotify().then(({ data }: { data: Irespone }) => {
       if (data.status === SUCCESS) {
-        // setCount(data?.data?.length);
+        setCount(data?.data?.length);
         setData(data.data);
       }
     });
   }, []);
-  React.useEffect(() => {
-    socket.on("Order", (data: any) => {
-      if (data) {
-        setCount(data.length);
-        setData(data.reverse());
-        setLoading(false);
-      }
-    });
-  }, []);
+  // React.useEffect(() => {
+  //   socket.on("Order", (data: any) => {
+  //     if (data) {
+  //       setCount(data.length);
+  //       setData(data.reverse());
+  //       setLoading(false);
+  //     }
+  //   });
+  // }, []);
 
   const handleShowNotify = () => {
     setShowNoti(!showNoti);
   };
   const handlePreview = (id: string) => {
-    socket.emit("Preview", id);
-    socket.on("PreviewSuccess", (data: any) => {
-      if (data) {
-        history.push("/admin/order-form");
-      }
-    });
+    // socket.emit("Preview", id);
+    // socket.on("PreviewSuccess", (data: any) => {
+    //   if (data) {
+    //     history.push("/admin/order-form");
+    //   }
+    // });
   };
 
   return (

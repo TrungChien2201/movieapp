@@ -13,7 +13,11 @@ import { useHistory } from "react-router";
 import "./style.scss";
 import apis from "../../../../../api";
 import { Irespone } from "../../../../../constants/interface";
-import { SUCCESS } from "../../../../../constants";
+import {
+  REGEX_EMAIL,
+  REGEX_PHONE_NUMBER,
+  SUCCESS,
+} from "../../../../../constants";
 import FormatMoney from "../../../../../components/format-money";
 import { PayPalButton } from "react-paypal-button-v2";
 import Axios from "axios";
@@ -103,13 +107,6 @@ const Payment = (props: any) => {
 
   return (
     <div className="container">
-      <div>
-        <div>
-          Bạn có mã ưu đãi?{" "}
-          <p onClick={handleKeySale}>Nhấp vào đây để nhập mã</p>
-        </div>
-      </div>
-
       <Form onFinish={handleSubmit} className="form-contact">
         <div className="d-flex row">
           <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
@@ -117,33 +114,42 @@ const Payment = (props: any) => {
             <Form.Item
               label="Họ và tên"
               name="name"
-              rules={[{ required: true, message: "Value is not null" }]}
+              rules={[{ required: true, message: "Không được để trống" }]}
             >
               <Input />
             </Form.Item>
             <Form.Item
               label="Số điện thoại"
               name="phone"
-              rules={[{ required: true, message: "Value is not null" }]}
+              rules={[
+                { required: true, message: "Không được để trống" },
+                {
+                  pattern: new RegExp(REGEX_PHONE_NUMBER),
+                  message: "Phải đúng định dạng số điện thoại",
+                },
+              ]}
             >
               <Input />
             </Form.Item>
             <Form.Item
               label="Địa chỉ email (tùy chọn)"
               name="email"
-              rules={[{ required: true, message: "Value is not null" }]}
+              rules={[
+                { required: true, message: "Không được để trống" },
+                {
+                  pattern: new RegExp(REGEX_EMAIL),
+                  message: "Phải đúng định dạng email",
+                },
+              ]}
             >
               <Input />
             </Form.Item>
             <Form.Item
               label="Tỉnh/Thành Phố"
               name="city"
-              rules={[{ required: true, message: "Value is not null" }]}
+              rules={[{ required: true, message: "Không được để trống" }]}
             >
-              <Select
-                onChange={handleChangeCity}
-                suffixIcon={<i className="fas fa-sort-down"></i>}
-              >
+              <Select onChange={handleChangeCity}>
                 {Array.isArray(city) &&
                   city.map((item: any) => (
                     <Option key={item.province_code} value={item.province_name}>
@@ -155,12 +161,9 @@ const Payment = (props: any) => {
             <Form.Item
               label="Huyện/Quận"
               name="district"
-              rules={[{ required: true, message: "Value is not null" }]}
+              rules={[{ required: true, message: "Không được để trống" }]}
             >
-              <Select
-                onChange={handleChangeDistrict}
-                suffixIcon={<i className="fas fa-sort-down"></i>}
-              >
+              <Select onChange={handleChangeDistrict}>
                 {Array.isArray(district) &&
                   district.map((item: any) => (
                     <Option key={item.district_code} value={item.district_name}>
@@ -172,9 +175,9 @@ const Payment = (props: any) => {
             <Form.Item
               label="Phường/Xã"
               name="commune"
-              rules={[{ required: true, message: "Value is not null" }]}
+              rules={[{ required: true, message: "Không được để trống" }]}
             >
-              <Select suffixIcon={<i className="fas fa-sort-down"></i>}>
+              <Select>
                 {Array.isArray(commune) &&
                   commune.map((item: any) => (
                     <Option key={item.ward_code} value={item.ward_name}>
@@ -186,7 +189,7 @@ const Payment = (props: any) => {
             <Form.Item
               label="Địa chỉ"
               name="address"
-              rules={[{ required: true, message: "Value is not null" }]}
+              rules={[{ required: true, message: "Không được để trống" }]}
             >
               <Input placeholder="vd: số nhà/ngách/ngõ , xóm/thôn" />
             </Form.Item>

@@ -8,6 +8,7 @@ import { SUCCESS } from "../../../constants";
 import LoadingPage from "../../../components/LoadingPage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import FormatMoney from "../../../components/format-money";
 const StoreProduct = () => {
   const userId = localStorage.getItem("id");
   const [store, setStore] = useState([]);
@@ -41,7 +42,7 @@ const StoreProduct = () => {
       store,
     });
   };
-  const deleteProduct = (id: String) => {
+  const deleteProduct = (id: String, product: any) => {
     apis
       .deleteProductStore({ userId, idProduct: id })
       .then(({ data }: { data: Irespone }) => {
@@ -53,6 +54,11 @@ const StoreProduct = () => {
           });
         }
       });
+    apis.addNumberProduct({
+      productId: product.productId,
+      total: product.total,
+      color: product.color,
+    });
   };
 
   const deleteAllProduct = () => {
@@ -128,11 +134,13 @@ const StoreProduct = () => {
                     <td>{item.color}</td>
                     <td>{item.size}</td>
                     <td>{item.total}</td>
-                    <td>{item.price_sale * item.total}đ</td>
+                    <td>
+                      <FormatMoney money={item.price_sale * item.total} />
+                    </td>
                     <td>
                       <Popconfirm
                         title="Bạn có chắc chắc muốn xóa sản phẩm này"
-                        onConfirm={() => deleteProduct(item._id)}
+                        onConfirm={() => deleteProduct(item._id, item)}
                         okText="Đồng ý"
                         cancelText="Hủy"
                       >
@@ -162,7 +170,9 @@ const StoreProduct = () => {
                 <td></td>
                 <td></td>
                 <td>
-                  <strong>SUM = {count}đ</strong>
+                  <strong>
+                    SUM = <FormatMoney money={count} />
+                  </strong>
                 </td>
                 <td></td>
               </tr>
