@@ -119,7 +119,7 @@ const DrawerFormFilter = (props: PropsDrawer) => {
         <Col span={4}>
           <ButtonCustom
             onClick={() => setIsFilter(true)}
-            icon={<FontAwesomeIcon icon={faFilter} />}
+            icon={<FontAwesomeIcon icon={faFilter as any} />}
           >
             Lọc theo giá sản phẩm
           </ButtonCustom>

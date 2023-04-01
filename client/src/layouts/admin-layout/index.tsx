@@ -102,7 +102,7 @@ const LayoutAdmin = () => {
               >
                 <Badge count={count !== 0 ? count : null}>
                   <FontAwesomeIcon
-                    icon={faBell}
+                    icon={faBell as any}
                     style={{ fontSize: "24px", color: "#675b5b" }}
                   />
                   {/* <i onBlur={()=>setShowNoti(false)} style={{fontSize: '24px', color: '#675b5b'}} className="fas fa-bell"></i>  */}

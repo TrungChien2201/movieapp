@@ -139,42 +139,42 @@ const ProductDetail = () => {
 
   const note_data = [
     {
-      icon: <FontAwesomeIcon icon={faCheckCircle} />,
+      icon: <FontAwesomeIcon icon={faCheckCircle as any} />,
       title: "Chất lượng sản phẩm?",
       text: "Sản phẩm luôn được MENSHOP kiểm định, đánh giá với chất lượng cao nhất trước khi đến tay khách hàng!",
     },
     {
-      icon: <FontAwesomeIcon icon={faAdjust} />,
+      icon: <FontAwesomeIcon icon={faAdjust as any} />,
       title: "Sai màu sản phẩm?",
       text: "Vì 1 số yếu tố khách quan như độ sáng màn hình, chất lượng màn hình nên sản phẩm có thể ko đúng màu.",
     },
     {
-      icon: <FontAwesomeIcon icon={faMedal} />,
+      icon: <FontAwesomeIcon icon={faMedal as any} />,
       title: "Hàng có sẵn không?",
       text: "Sản phẩm hiện có sẵn tại hệ thống cửa hàng XSHOP và online tại website.",
     },
     {
-      icon: <FontAwesomeIcon icon={faThumbsUp} />,
+      icon: <FontAwesomeIcon icon={faThumbsUp as any} />,
       title: "Bảo hành sản phẩm",
       text: "Sản phẩm được bảo hành trong 30 ngày với bất kỳ lỗi nào. Hàng SALE không được bảo hành.",
     },
     {
-      icon: <FontAwesomeIcon icon={faClock} />,
+      icon: <FontAwesomeIcon icon={faClock as any} />,
       title: "Thời gian giao hàng?",
       text: "Chúng tôi sử dụng đơn vi vận chuyển uy tín và nhanh chóng nhất, thời dự kiến từ 1-4 ngày tuy khu vực.",
     },
     {
-      icon: <FontAwesomeIcon icon={faTimes} />,
+      icon: <FontAwesomeIcon icon={faTimes as any} />,
       title: "Thời gian làm việc?",
       text: "Hệ thống cửa hàng và Online làm việc từ 8:30 - 22:00 hàng ngày.",
     },
     {
-      icon: <FontAwesomeIcon icon={faHistory} />,
+      icon: <FontAwesomeIcon icon={faHistory as any} />,
       title: "Đổi hàng như thế nào?",
       text: "Việc đổi hàng rất dễ dàng và chúng tôi luôn muốn khách hàng ưng ý nhất. Hãy liên hệ fanpage để đổi!",
     },
     {
-      icon: <FontAwesomeIcon icon={faExpandAlt} />,
+      icon: <FontAwesomeIcon icon={faExpandAlt as any} />,
       title: "Chọn sai size giày?",
       text: "Bạn có thể qua cửa hàng hoặc gửi lại để đổi hàng với sản phẩm mới 100%. Còn nguyên tem mác, hoá đơn mua hàng.",
     },
@@ -328,15 +328,15 @@ const ProductDetail = () => {
                 <Panel header="Chính sách giao hàng & đổi trả" key="1">
                   <div className="exchange">
                     <div className="d-flex">
-                      <FontAwesomeIcon icon={faTruck} />{" "}
+                      <FontAwesomeIcon icon={faTruck as any} />{" "}
                       <span>Giao hàng hoàn toàn miễn phí 100%</span>
                     </div>
                     <div className="d-flex">
-                      <FontAwesomeIcon icon={faShieldAlt} />{" "}
+                      <FontAwesomeIcon icon={faShieldAlt as any} />{" "}
                       <span>An toàn với nhận hàng và trả tiền tại nhà</span>
                     </div>
                     <div className="d-flex">
-                      <FontAwesomeIcon icon={faExchangeAlt} />{" "}
+                      <FontAwesomeIcon icon={faExchangeAlt as any} />{" "}
                       <span>Bảo hành đổi trả trong vòng 60 ngày</span>
                     </div>
                   </div>

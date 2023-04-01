@@ -77,7 +77,7 @@ const Header = () => {
               >
                 <div className="fullname-profile">
                   {data?.firstname} {data?.lastname}
-                  <FontAwesomeIcon icon={faSortDown} />
+                  <FontAwesomeIcon icon={faSortDown as any} />
                 </div>
               </Dropdown>
             ) : (
@@ -116,12 +116,12 @@ const Header = () => {
         <Menu mode="horizontal" className="icon">
           <Menu.Item key="point">
             <Link onClick={handleOpenDrawer}>
-              <FontAwesomeIcon icon={faSearch} />
+              <FontAwesomeIcon icon={faSearch as any} />
             </Link>
           </Menu.Item>
           <Menu.Item key="order">
             <Link to="/store">
-              <FontAwesomeIcon icon={faCartPlus} />
+              <FontAwesomeIcon icon={faCartPlus as any} />
             </Link>
           </Menu.Item>
         </Menu>

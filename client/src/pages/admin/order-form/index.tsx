@@ -210,7 +210,7 @@ const handleSearch =() => {
             <Input placeholder="Nhập tên người nhận" onChange={handleSearchChange}/>
           </Form.Item>
           <Form.Item>
-            <Button style={{borderLeft: 'none', height: '40px'}} onClick={handleSearch}><FontAwesomeIcon icon={faSearch}/></Button>
+            <Button style={{borderLeft: 'none', height: '40px'}} onClick={handleSearch}><FontAwesomeIcon icon={faSearch as any}/></Button>
           </Form.Item>
         </Form>
       <Table

@@ -20,7 +20,7 @@ const StoreProduct = () => {
     if (userId) {
       apis.getStore(userId).then(({ data }: { data: Irespone }) => {
         setLoading(false);
-        if (data?.data?.store !== [null] && data?.data?.store?.length > 0) {
+        if (data?.data?.store && data?.data?.store?.length > 0) {
           setStore(data?.data?.store);
           const counts =
             data?.data?.store.length > 0 &&
@@ -114,7 +114,7 @@ const StoreProduct = () => {
                     cancelText="Hủy"
                   >
                     <Button style={{ border: "none", color: "#c51212" }}>
-                      <FontAwesomeIcon icon={faTrash} />
+                      <FontAwesomeIcon icon={faTrash as any} />
                     </Button>
                   </Popconfirm>
                 </th>
@@ -145,7 +145,7 @@ const StoreProduct = () => {
                         cancelText="Hủy"
                       >
                         <Button style={{ border: "none", color: "#c51212" }}>
-                          <FontAwesomeIcon icon={faTrash} />
+                          <FontAwesomeIcon icon={faTrash as any} />
                         </Button>
                       </Popconfirm>
                     </td>
@@ -157,7 +157,7 @@ const StoreProduct = () => {
                     className="btn-add-product"
                     onClick={() => history.push("/")}
                   >
-                    <FontAwesomeIcon icon={faCartPlus} /> Mua thêm
+                    <FontAwesomeIcon icon={faCartPlus as any} /> Mua thêm
                   </Button>
                 </td>
                 <td colSpan={2}>

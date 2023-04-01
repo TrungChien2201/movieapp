@@ -221,7 +221,7 @@ const Employee = () => {
               style={{ borderLeft: "none", height: "40px" }}
               onClick={handleSearch}
             >
-              <FontAwesomeIcon icon={faSearch} />
+              <FontAwesomeIcon icon={faSearch as any} />
             </Button>
           </Form.Item>
         </Form>

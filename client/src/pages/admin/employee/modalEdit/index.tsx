@@ -4,6 +4,7 @@ import "./style.scss";
 import ButtonCustom from "../../../../components/Button";
 import moment from "moment";
 const dateFormat = "YYYY/MM/DD";
+const DatePickers: any = DatePicker;
 interface Props {
   visible?: boolean;
   setVisible: (e: boolean) => void | undefined;
@@ -88,7 +89,7 @@ const ModalEditEmployee = (props: Props) => {
           name="date_birth"
           rules={[{ required: true, message: "Is  not Null" }]}
         >
-          <DatePicker
+          <DatePickers
             format={dateFormat}
             onChange={OnchangeDateBirth}
             value={moment(dateBirth, dateFormat)}
@@ -130,7 +131,7 @@ const ModalEditEmployee = (props: Props) => {
           name="date_join"
           rules={[{ required: true, message: "Is  not Null" }]}
         >
-          <DatePicker
+          <DatePickers
             format={dateFormat}
             onChange={OnchangeDateJoin}
             value={moment(dateJoin, dateFormat)}

@@ -15,7 +15,9 @@ import moment from "moment";
 import { Card, DatePicker } from "antd";
 import Title from "antd/lib/typography/Title";
 import { useState } from "react";
-import { Doughnut, Bar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+
+const DatePickers: any = DatePicker;
 
 const MangerStatistical = () => {
   const [order, setOrder] = React.useState("");
@@ -264,7 +266,7 @@ const MangerStatistical = () => {
             <h5>Tài khoản</h5>
             <div>{account?.length}</div>
             <div className="card-infor__icon card-infor__icon-account">
-              <FontAwesomeIcon icon={faUserCircle} />
+              <FontAwesomeIcon icon={faUserCircle as any} />
             </div>
           </div>
         </div>
@@ -273,7 +275,7 @@ const MangerStatistical = () => {
             <h5>Đơn hàng</h5>
             <div>{order?.length}</div>
             <div className="card-infor__icon card-infor__icon-order">
-              <FontAwesomeIcon icon={faChartBar} />
+              <FontAwesomeIcon icon={faChartBar as any} />
             </div>
           </div>
         </div>
@@ -283,7 +285,7 @@ const MangerStatistical = () => {
             <h5>Sản phẩm</h5>
             <div>{product?.length}</div>
             <div className="card-infor__icon card-infor__icon-follow">
-              <FontAwesomeIcon icon={faEye} />
+              <FontAwesomeIcon icon={faEye as any} />
             </div>
           </div>
         </div>
@@ -294,15 +296,15 @@ const MangerStatistical = () => {
               <FormatMoney money={total} />{" "}
             </div>
             <div className="card-infor__icon card-infor__icon-total">
-              <FontAwesomeIcon icon={faDollarSign} />
+              <FontAwesomeIcon icon={faDollarSign as any} />
             </div>
           </div>
         </div>
       </div>
       <div>
-        <Bar data={data} options={options} />
+        <Bar data={data} options={options as any} />
         <Card title="Thống kê theo tuần">
-          <DatePicker onChange={handleChangeWeek} picker="week" />{" "}
+          <DatePickers onChange={handleChangeWeek} picker="week" />{" "}
           {countOrderWeekOption?.total && (
             <>
               <small style={{ marginLeft: "15px" }}>
@@ -318,10 +320,10 @@ const MangerStatistical = () => {
               </small>
             </>
           )}
-          {countWeekOption && <Bar data={dataWeekOption} options={options} />}
+          {countWeekOption && <Bar data={dataWeekOption} options={options as any} />}
         </Card>
         <Card title="Thống kê theo năm">
-          <DatePicker onChange={handleOnchangeYear} picker="year" />
+          <DatePickers onChange={handleOnchangeYear} picker="year" />
           {countOrderYear?.total && (
             <>
               <small style={{ marginLeft: "15px" }}>
@@ -336,7 +338,7 @@ const MangerStatistical = () => {
               </small>
             </>
           )}
-          {countYearOption && <Bar data={dataYearOption} options={options} />}
+          {countYearOption && <Bar data={dataYearOption} options={options as any} />}
         </Card>
       </div>
     </div>

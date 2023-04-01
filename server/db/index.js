@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 mongoose
-    .connect('mongodb+srv://chienvu:chien2201@cluster0.u37lg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+    .connect('mongodb://127.0.0.1:27017/movie-app', {
         useNewUrlParser: true,
         })
     .catch(e => {

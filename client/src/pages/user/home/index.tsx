@@ -10,6 +10,7 @@ import LoadingPage from "../../../components/LoadingPage";
 import MessengerCustomerChat from "react-messenger-customer-chat";
 import { Irespone } from "../../../constants/interface";
 import { SUCCESS } from "../../../constants";
+const ReactPlayers: any = ReactPlayer;
 const HomePage = () => {
   const [product, setProduct] = useState([]);
   const [productHightLight, setProductHightLight] = useState([]);
@@ -239,7 +240,7 @@ const HomePage = () => {
               <p className="text-description">Khách Hàng Đã Mua</p>
             </div>
             <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 pr-0">
-              <ReactPlayer
+              <ReactPlayers
                 width="100%"
                 height="400px"
                 url="https://www.youtube.com/watch?v=V82P_JP7Drc"

@@ -58,7 +58,7 @@ const UploadListFile = (props: any) => {
                 type="link"
               >
                 <FontAwesomeIcon
-                  icon={faTimes}
+                  icon={faTimes as any}
                   style={{ fontSize: "16px", color: "#d42424" }}
                 />
               </Button>

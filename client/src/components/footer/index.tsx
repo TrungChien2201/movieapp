@@ -1,6 +1,9 @@
 import React from "react";
 import Iframe from "react-iframe";
 import "./style.scss";
+
+const Iframes: any = Iframe;
+
 const Footer = () => {
   return (
     <div className="footer">
@@ -43,7 +46,7 @@ const Footer = () => {
           </div>
           <div className="col-12 col-sm-12 col-md-8 col-lg-4 col-xl-4 pr-0 footer-iframe">
             <h5 className="footer-iframe_title">MENSHOP trên facebook</h5>
-            <Iframe
+            <Iframes
               url="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FMenshop-105721911609064&tabs=timeline&width=371&height=127&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
               width="100%"
               height="100%"
